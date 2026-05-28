@@ -1,0 +1,10 @@
+{
+  "name": "collabo-hub",
+  "private": true,
+  "scripts": {
+    "dev:back": "pnpm --filter collabo-hub-back start:dev",
+    "dev:front": "pnpm --filter collabo-hub-front dev",
+    "build:back": "pnpm --filter collabo-hub-back build",
+    "build:front": "pnpm --filter collabo-hub-front build"
+  }
+}

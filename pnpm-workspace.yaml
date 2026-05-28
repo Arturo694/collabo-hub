@@ -1,0 +1,8 @@
+packages:
+  - 'collabo-hub-back'
+  - 'collabo-hub-front'
+
+allowBuilds:
+  '@nestjs/core': true
+  esbuild: false
+  unrs-resolver: true
