@@ -6,7 +6,10 @@ import {
   LuDownload,
   LuShare2,
   LuMaximize2,
-  LuClipboardList
+  LuClipboardList,
+  LuZap,
+  LuUsers,
+  LuShield
 } from "react-icons/lu";
 
 export default function Home() {
@@ -28,8 +31,37 @@ export default function Home() {
             Learn more
           </button>
         </div>
-      </div>
 
+        <div className="mt-12 grid grid-cols-3 gap-4">
+          <div className="bg-neutral-50 rounded-xl p-4">
+            <p className="text-2xl font-bold text-custom-blue font-gabarito">12</p>
+            <p className="text-xs text-neutral-500 font-outfit mt-1">Active projects</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-4">
+            <p className="text-2xl font-bold text-custom-blue font-gabarito">48</p>
+            <p className="text-xs text-neutral-500 font-outfit mt-1">Team members</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-4">
+            <p className="text-2xl font-bold text-custom-blue font-gabarito">95%</p>
+            <p className="text-xs text-neutral-500 font-outfit mt-1">Tasks completed</p>
+          </div>
+        </div>
+
+        <div className="mt-8 space-y-3">
+          <div className="flex items-center gap-3 text-sm text-neutral-600 font-outfit">
+            <div className="w-8 h-8 rounded-lg bg-custom-blue/10 flex items-center justify-center text-custom-blue shrink-0"><LuZap size={16} /></div>
+            <span>Real-time sync across all your devices</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-neutral-600 font-outfit">
+            <div className="w-8 h-8 rounded-lg bg-custom-blue/10 flex items-center justify-center text-custom-blue shrink-0"><LuUsers size={16} /></div>
+            <span>Unlimited collaborators per workspace</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-neutral-600 font-outfit">
+            <div className="w-8 h-8 rounded-lg bg-custom-blue/10 flex items-center justify-center text-custom-blue shrink-0"><LuShield size={16} /></div>
+            <span>Enterprise-grade security & encryption</span>
+          </div>
+        </div>
+      </div>
 
       <div className="flex justify-center">
         <div className="border border-neutral-200 rounded-2xl p-5 w-full max-w-md">
@@ -73,11 +105,11 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs font-semibold text-neutral-700 mb-1 font-outfit">Description</p>
             <p className="text-xs text-neutral-500 font-outfit leading-relaxed">
-              Integrate Stripe subscription billing with automated email receipts and 
+              Integrate Stripe subscription billing with automated email receipts and
               payment failure notifications to keep customers informed.
             </p>
             <p className="text-xs text-neutral-500 font-outfit leading-relaxed mt-2">
-              Includes webhook handling for subscription lifecycle events and custom email templates 
+              Includes webhook handling for subscription lifecycle events and custom email templates
               for trial expiration, payment success, and cancellation confirmations.
             </p>
           </div>
