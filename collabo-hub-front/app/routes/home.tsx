@@ -14,25 +14,25 @@ import {
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-5xl px-5 py-16 grid grid-cols-2 gap-5">
+    <div className="mx-auto max-w-5xl px-5 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-5">
       <div>
-        <h2 className="font-gabarito text-7xl font-bold text-custom-blue leading-tight">
+        <h2 className="font-gabarito text-5xl md:text-7xl font-bold text-custom-blue leading-tight">
           Your projects, powered by productivity
         </h2>
         <p className="font-outfit text-neutral-500 mt-6 leading-relaxed">
           Collaborate with your team in real-time, manage tasks effortlessly,
           and ship faster than ever. All in one place.
         </p>
-        <div className="flex items-center gap-4 mt-8">
-          <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-8">
+          <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-center">
             Get started
           </button>
-          <button className="border border-neutral-300 hover:border-custom-blue text-neutral-700 hover:text-custom-blue font-outfit font-medium px-6 py-3 rounded-lg transition-all">
+          <button className="border border-neutral-300 hover:border-custom-blue text-neutral-700 hover:text-custom-blue font-outfit font-medium px-6 py-3 rounded-lg transition-all text-center">
             Learn more
           </button>
         </div>
 
-        <div className="mt-12 grid grid-cols-3 gap-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="bg-neutral-50 rounded-xl p-4">
             <p className="text-2xl font-bold text-custom-blue font-gabarito">12</p>
             <p className="text-xs text-neutral-500 font-outfit mt-1">Active projects</p>
@@ -121,7 +121,7 @@ export default function Home() {
               { name: "Stripe-API-Reference.pdf", date: "12:32 PM, 22, August", color: "bg-custom-blue/10 text-custom-blue" },
               { name: "Email-Templates.fig", date: "14:35 PM, 24, August", color: "bg-custom-blue/10 text-custom-blue" },
             ].map((file) => (
-              <div key={file.name} className="flex items-center justify-between py-2 border-b border-neutral-100 last:border-0">
+              <div key={file.name} className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-neutral-100 last:border-0 gap-2">
                 <div className="flex items-center gap-2">
                   <div className={`w-7 h-7 rounded-lg ${file.color} flex items-center justify-center text-xs`}><LuFileText size={14} /></div>
                   <div>
@@ -129,7 +129,7 @@ export default function Home() {
                     <p className="text-xs text-neutral-400 font-outfit">{file.date}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <button className="text-xs text-neutral-500 hover:text-neutral-700 font-outfit">View</button>
                   <button className="text-xs text-neutral-500 hover:text-neutral-700 font-outfit inline-flex items-center gap-1"><LuDownload size={12} /> Download</button>
                 </div>
