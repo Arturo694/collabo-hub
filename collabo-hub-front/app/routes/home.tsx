@@ -1,3 +1,14 @@
+import {
+  LuX,
+  LuClock,
+  LuTimer,
+  LuFileText,
+  LuDownload,
+  LuShare2,
+  LuMaximize2,
+  LuClipboardList
+} from "react-icons/lu";
+
 export default function Home() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-16 grid grid-cols-2 gap-5">
@@ -22,56 +33,65 @@ export default function Home() {
 
       <div className="flex justify-center">
         <div className="border border-neutral-200 rounded-2xl p-5 w-full max-w-md">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-1">
-            <span className="text-xs text-neutral-400 font-outfit">Appointments</span>
-            <button className="text-neutral-400 hover:text-neutral-600">✕</button>
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-5">
+              <span className="text-xs text-neutral-400 font-outfit inline-flex items-center gap-1.5"><LuShare2 size={14} /> Share</span>
+              <span className="text-xs text-neutral-400 font-outfit inline-flex items-center gap-1.5"><LuMaximize2 size={14} /> Expand</span>
+            </div>
+            <button className="text-neutral-400 hover:text-neutral-600"><LuX size={14} /></button>
+          </div>
+          <div className="flex items-center gap-1.5 mb-2">
+            <LuClipboardList size={15} className="text-custom-blue" />
+            <span className="text-xs text-neutral-400 font-outfit">Task</span>
           </div>
           <h3 className="font-outfit font-semibold text-neutral-800 text-lg leading-snug mb-3">
-            Schedule Me An Appointment With My Endocrinologist
+            Implement Stripe subscription integration with email notifications
           </h3>
 
-          {/* Badges */}
+
           <div className="flex items-center gap-2 mb-4">
-            <span className="bg-green-100 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full font-outfit">
+            <span className="bg-custom-blue/10 text-custom-blue text-xs font-medium px-2.5 py-1 rounded-full font-outfit">
               High Priority
             </span>
             <span className="flex items-center gap-1 text-xs text-neutral-400 font-outfit">
-              🕐 Jul 10 - 14
+              <LuClock size={14} /> {new Date().toDateString()}
             </span>
           </div>
 
-          {/* Timer */}
-          <div className="bg-purple-50 rounded-xl px-4 py-3 flex items-center justify-between mb-4">
+
+          <div className="bg-custom-blue text-white rounded-xl px-4 py-3 flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-purple-200 flex items-center justify-center text-purple-600 text-xs">⏱</div>
-              <span className="text-sm text-neutral-600 font-outfit">Time Spent on this project</span>
+              <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs text-custom-blue"><LuTimer size={14} /></div>
+              <span className="text-sm font-outfit">Time Spent on this project</span>
             </div>
-            <span className="font-mono text-sm font-semibold text-neutral-700">12:45:00</span>
+            <span className="font-mono text-sm font-semibold">
+              {new Date().toLocaleTimeString()}
+            </span>
           </div>
 
-          {/* Description */}
+
           <div className="mb-4">
             <p className="text-xs font-semibold text-neutral-700 mb-1 font-outfit">Description</p>
             <p className="text-xs text-neutral-500 font-outfit leading-relaxed">
-              Specializes in the diagnosis and treatment of diseases related to the endocrine system,
-              which includes glands and organs that produce hormones.
+              Integrate Stripe subscription billing with automated email receipts and 
+              payment failure notifications to keep customers informed.
             </p>
             <p className="text-xs text-neutral-500 font-outfit leading-relaxed mt-2">
-              These hormones regulate various bodily functions such as metabolism, growth, and reproduction.
+              Includes webhook handling for subscription lifecycle events and custom email templates 
+              for trial expiration, payment success, and cancellation confirmations.
             </p>
           </div>
 
-          {/* Attachments */}
+
           <div className="mb-4">
             <p className="text-xs font-semibold text-neutral-700 mb-2 font-outfit">Attachments</p>
             {[
-              { name: "Medical Prescription.docx", date: "12:32 PM, 22, August", color: "bg-pink-100 text-pink-500" },
-              { name: "Doctor Appointment.pdf", date: "14:35 PM, 24, August", color: "bg-purple-100 text-purple-500" },
+              { name: "Stripe-API-Reference.pdf", date: "12:32 PM, 22, August", color: "bg-custom-blue/10 text-custom-blue" },
+              { name: "Email-Templates.fig", date: "14:35 PM, 24, August", color: "bg-custom-blue/10 text-custom-blue" },
             ].map((file) => (
               <div key={file.name} className="flex items-center justify-between py-2 border-b border-neutral-100 last:border-0">
                 <div className="flex items-center gap-2">
-                  <div className={`w-7 h-7 rounded-lg ${file.color} flex items-center justify-center text-xs`}>📄</div>
+                  <div className={`w-7 h-7 rounded-lg ${file.color} flex items-center justify-center text-xs`}><LuFileText size={14} /></div>
                   <div>
                     <p className="text-xs font-medium text-neutral-700 font-outfit">{file.name}</p>
                     <p className="text-xs text-neutral-400 font-outfit">{file.date}</p>
@@ -79,24 +99,24 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="text-xs text-neutral-500 hover:text-neutral-700 font-outfit">View</button>
-                  <button className="text-xs text-neutral-500 hover:text-neutral-700 font-outfit">↓ Download</button>
+                  <button className="text-xs text-neutral-500 hover:text-neutral-700 font-outfit inline-flex items-center gap-1"><LuDownload size={12} /> Download</button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Comments */}
+
           <div>
             <div className="flex gap-3 border-b border-neutral-200 mb-3">
-              <button className="text-xs font-semibold text-neutral-800 pb-2 border-b-2 border-neutral-800 font-outfit">Comments</button>
+              <button className="text-xs font-semibold text-custom-blue pb-2 border-b-2 border-custom-blue font-outfit">Comments</button>
               <button className="text-xs text-neutral-400 pb-2 font-outfit">Updates</button>
             </div>
             {[
-              { name: "John Smith", time: "17th Feb 2024", msg: "I want a complete diet plan." },
-              { name: "John Smith", time: "Just Now", msg: "Do you have any update?" },
+              { name: "Alice Chen", time: "17th Feb 2024", msg: "I can handle the webhook endpoint." },
+              { name: "Alice Chen", time: "Just Now", msg: "Do we need email templates for failed payments?" },
             ].map((c, i) => (
               <div key={i} className="flex items-start gap-2 mb-3">
-                <div className="w-7 h-7 rounded-full bg-blue-200 flex items-center justify-center text-xs text-blue-700 font-semibold shrink-0">JS</div>
+                <div className="w-7 h-7 rounded-full bg-custom-blue/10 flex items-center justify-center text-xs text-custom-blue font-semibold shrink-0">AC</div>
                 <div>
                   <p className="text-xs text-neutral-400 font-outfit">{c.name} · {c.time}</p>
                   <p className="text-xs text-neutral-700 font-outfit">{c.msg}</p>
