@@ -15,7 +15,7 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Create teams and collaborate" />
-        <title>Collabo-Hub</title>
+        <title>Collabo-Hub - Work with your team</title>
         <Meta />
         <Links />
       </head>
