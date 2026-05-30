@@ -49,7 +49,7 @@ export default function PublicLayout() {
                 </div>
             </nav>
             <Outlet />
-            <footer className="border-t border-neutral-200 bg-white">
+            <footer className="bg-white">
                 <div className="max-w-5xl mx-auto px-5 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                     <div>
                         <h4 className="font-gabarito font-bold text-custom-blue text-lg mb-3">Collabo-Hub</h4>
