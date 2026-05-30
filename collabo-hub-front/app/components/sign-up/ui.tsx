@@ -16,6 +16,7 @@ const SignUpView = observer(({ store }: { store: SignUpStore }) => {
         <form className="space-y-4" onSubmit={(e) => {
             e.preventDefault()
             store.checkValidation()
+            console.log("todo bie");
         }}>
             <div>
                 <label className="font-outfit text-xs font-medium text-neutral-700 mb-1.5 block">

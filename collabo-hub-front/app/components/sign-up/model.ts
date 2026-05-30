@@ -22,10 +22,8 @@ const SignupSchema = z.object({
             .startsWith("@", "At sign must start with @")
             .min(5, "At sign must be at least 5 characters long")
             .max(20, "At sign must be at most 20 characters long")
-            .regex(/^[a-zA-Z0-9_]+$/, "At sign can only contain letters, numbers, and underscores"),
 }).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+    message: "Passwords do not match"
 });
 
 
@@ -73,23 +71,24 @@ class SignUpStore {
     }
 
     checkValidation() {
-        this.validationErrors = [];
-        try {
-            const parsedData = SignupSchema.parse({
-                userName: this.userName,
-                email: this.email,
-                password: this.password,
-                confirmPassword: this.confirmPassword,
-                atSign: this.atSign,
-            })
-            console.log(parsedData);
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                this.validationErrors = error.issues.map(
-                    (issue) => issue.message
-                );
-            }
+        const result = SignupSchema.safeParse({
+            userName: this.userName,
+            email: this.email,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
+            atSign: this.atSign,
+        });
+
+        if (!result.success)
+            this.validationErrors = result.error.issues.map(
+                (issue) => issue.message
+            );
+        else {
+            this.reset()
+            console.log('paso la valid');
         }
+
+
     }
 
     reset() {
