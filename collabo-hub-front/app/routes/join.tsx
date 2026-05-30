@@ -1,5 +1,19 @@
+import type { Route } from "./+types/join";
 import { Link } from "react-router";
 import SignUpView from "../components/sign-up/ui";
+
+
+export function meta({ }: Route.MetaArgs) {
+    return [
+        {
+            title: "Join Collabo-Hub — Start collaborating today"
+        },
+        {
+            name: "description",
+            content: "Create your account and start collaborating with your team."
+        },
+    ];
+}
 
 export default function Join() {
 

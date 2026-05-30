@@ -6,7 +6,15 @@ import {
   ScrollRestoration
 } from "react-router";
 
+import type { Route } from "./+types/root";
 import "./app.css";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Collabo-Hub" },
+    { name: "description", content: "Create teams and collaborate" },
+  ];
+}
 
 export default function App() {
   return (
@@ -14,8 +22,6 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Create teams and collaborate" />
-        <title>Collabo-Hub - Work with your team</title>
         <Meta />
         <Links />
       </head>
