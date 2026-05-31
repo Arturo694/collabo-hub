@@ -1,15 +1,56 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { User } from './user.schema';
+
+export enum TeamVisibility {
+    Private = 'private',
+    Public = 'public',
+}
 
 
 @Schema()
 export class Team {
     @Prop({ required: true })
-    name: String;
+    name: string;
 
-    @Prop({ default: "Work in our project" })
-    description: String;
+    @Prop({ maxLength: 200, default: "Work in our project" })
+    description: string;
 
+    @Prop({ default: Date.now })
+    createdAt: Date;
+
+    @Prop({
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true
+    })
+    createdBy: User;
+
+    @Prop({
+        type: [{
+            type: Types.ObjectId,
+            ref: 'User'
+        }],
+        required: true
+    })
+    members: User[];
+
+    @Prop({
+        type: [String],
+        default: [
+            "Team",
+            "Progress",
+            "Challange",
+            "Success"
+        ]
+    })
+    tags: string[];
+
+    @Prop({
+        default: TeamVisibility.Private,
+        enum: TeamVisibility
+    })
+    visibility: TeamVisibility;
 
 }
 
