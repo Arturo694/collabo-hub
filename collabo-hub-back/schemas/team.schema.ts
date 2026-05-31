@@ -57,3 +57,8 @@ export class Team {
 
 export type TeamDocument = HydratedDocument<Team>;
 export const TeamSchema = SchemaFactory.createForClass(Team);
+
+// The team has no collaborator limit.
+// The creator has full control over the team,
+// and each team member will have other
+// permissions that the creator does not.

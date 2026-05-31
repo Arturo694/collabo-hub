@@ -19,3 +19,7 @@ export class User {
 
 export type UserDocument = HydratedDocument<User>;
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// User has the basic fields of a normal user:
+// name, email, password, and an atsign (@)
+// which is used to mention them within the team.

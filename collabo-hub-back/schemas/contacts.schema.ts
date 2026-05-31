@@ -26,3 +26,9 @@ export class Contact {
 
 export type ContactDocument = HydratedDocument<Contact>;
 export const ContactSchema = SchemaFactory.createForClass(Contact);
+
+// Contacts are created when one of the two parties
+// accepts the invitation. This ensures that whoever
+// creates or belongs to a team can only add their
+// own contacts, preventing uncontrolled invitations to
+// strangers.
