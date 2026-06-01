@@ -3,15 +3,15 @@ import { HydratedDocument, Types } from 'mongoose';
 import { Team } from './team.schema';
 
 @Schema()
-export class Phase {
+export class Priority {
     @Prop({ required: true })
     name: string;
 
     @Prop({ required: true })
-    startDate: Date;
+    description: string;
 
     @Prop({ required: true })
-    endDate: Date;
+    color: string;
 
     @Prop({
         type: Types.ObjectId,
@@ -21,5 +21,5 @@ export class Phase {
     team: Team;
 }
 
-export type PhaseDocument = HydratedDocument<Phase>;
-export const PhaseSchema = SchemaFactory.createForClass(Phase);
+export type PriorityDocument = HydratedDocument<Priority>;
+export const PrioritySchema = SchemaFactory.createForClass(Priority);

@@ -15,6 +15,9 @@ export class User {
     @Prop({ required: true, unique: true })
     atsignal: string;
 
+    @Prop({ default: Date.now })
+    joined: Date;
+
 }
 
 export type UserDocument = HydratedDocument<User>;

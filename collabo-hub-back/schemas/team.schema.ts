@@ -5,6 +5,7 @@ import { User } from './user.schema';
 export enum TeamVisibility {
     Private = 'private',
     Public = 'public',
+    Archived = 'archived'
 }
 
 

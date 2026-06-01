@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-
+import { User } from './user.schema';
 
 @Schema()
 export class Contact {
@@ -10,14 +10,14 @@ export class Contact {
         ref: 'User',
         required: true
     })
-    user: Types.ObjectId;
+    user: User;
 
     @Prop({
         type: Types.ObjectId,
         ref: 'User',
         required: true
     })
-    contact: Types.ObjectId;
+    contact: User;
 
     @Prop({ default: Date.now })
     createdAt: Date;
