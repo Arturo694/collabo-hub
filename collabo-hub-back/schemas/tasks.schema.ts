@@ -19,6 +19,9 @@ export class Task {
     @Prop({ required: true })
     endDate: Date;
 
+    @Prop({ default: false })
+    approved: boolean;
+
     @Prop({
         type: [{
             type: Types.ObjectId,
@@ -41,9 +44,6 @@ export class Task {
         required: true
     })
     status: Status;
-
-    @Prop({ default: false })
-    approved: boolean;
 
     @Prop({
         type: Types.ObjectId,

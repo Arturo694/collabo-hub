@@ -13,6 +13,9 @@ export class Phase {
     @Prop({ required: true })
     endDate: Date;
 
+    @Prop({ required: true })
+    order: number;
+
     @Prop({
         type: Types.ObjectId,
         ref: 'Team',
