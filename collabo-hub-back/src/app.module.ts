@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SignupModule } from './signup/signup.module';
 
 @Module({
   imports: [
+    // Env vars
     ConfigModule.forRoot({ isGlobal: true }),
+    // Database connection
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -14,9 +15,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    // Our business logic
+    SignupModule
+  ]
 })
 
 export class AppModule { }

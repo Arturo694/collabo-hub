@@ -8,16 +8,38 @@ import {
 } from "react-icons/lu";
 
 import { observer } from "mobx-react-lite";
+import { ZodError } from "zod";
+import { SignupSchema, type SignUpData } from "./validation";
 import SignUpStore from "./model";
 
 
 const SignUpView = observer(({ store }: { store: SignUpStore }) => {
+
+    const handleSubmit = (e: React.SubmitEvent) => {
+        e.preventDefault();
+
+        const data: SignUpData = {
+            userName: store.userName,
+            email: store.email,
+            password: store.password,
+            confirmPassword: store.confirmPassword,
+            atSign: store.atSign
+        };
+
+        try {
+            SignupSchema.parse(data);
+            store.reset();
+        } catch (error) {
+            if (error instanceof ZodError) {
+                store.setValidationErrors(
+                    error.issues.map(err => err.message)
+                );
+            }
+        }
+    };
+
     return (
-        <form className="space-y-4" onSubmit={(e) => {
-            e.preventDefault()
-            store.checkValidation()
-            console.log("todo bie");
-        }}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
                 <label className="font-outfit text-xs font-medium text-neutral-700 mb-1.5 block">
                     Username
