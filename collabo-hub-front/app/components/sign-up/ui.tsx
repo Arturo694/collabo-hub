@@ -11,11 +11,12 @@ import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { SignupSchema, type SignUpData } from "./validation";
 import SignUpStore from "./model";
+import createUser from "./fetch";
 
 
 const SignUpView = observer(({ store }: { store: SignUpStore }) => {
 
-    const handleSubmit = (e: React.SubmitEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
         const data: SignUpData = {
@@ -28,6 +29,18 @@ const SignUpView = observer(({ store }: { store: SignUpStore }) => {
 
         try {
             SignupSchema.parse(data);
+            const res = await createUser({
+                username: store.userName,
+                email: store.email,
+                password: store.password,
+                atSign: store.atSign
+            });
+
+            if (!res.success) {
+                store.setValidationErrors(res.messages);
+                return;
+            }
+
             store.reset();
         } catch (error) {
             if (error instanceof ZodError) {

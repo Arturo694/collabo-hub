@@ -1,7 +1,6 @@
-import { Body, Controller, Post, ConflictException } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { SignupService } from './signup.service';
-import { CreateUserRequest } from './dto/request';
-import { CreateUserResponse } from './dto/response';
+import type { CreateUserRequest, CreateUserResponse } from '@collabo-hub/shared';
 
 @Controller('signup')
 export class SignupController {
@@ -20,9 +19,9 @@ export class SignupController {
       existAtSign && 'At sign already exists',
     ].filter(Boolean) as string[];
 
-    if (errors.length > 0) return { success: false, errors };
+    if (errors.length > 0) return { success: false, messages: errors };
 
     await this.signupService.createUser(createUserRequest);
-    return { success: true, errors: [] };
+    return { success: true, messages: ['User created successfully'] };
   }
 }
