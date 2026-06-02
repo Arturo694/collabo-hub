@@ -11,7 +11,7 @@ import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { SignupSchema, type SignUpData } from "./validation";
 import SignUpStore from "./model";
-import createUser from "./fetch";
+import iamSignup from "./fetch";
 
 
 const SignUpView = observer(({ store }: { store: SignUpStore }) => {
@@ -29,7 +29,7 @@ const SignUpView = observer(({ store }: { store: SignUpStore }) => {
 
         try {
             SignupSchema.parse(data);
-            const res = await createUser({
+            const res = await iamSignup({
                 username: store.userName,
                 email: store.email,
                 password: store.password,

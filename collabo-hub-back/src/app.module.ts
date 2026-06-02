@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SignupModule } from './signup/signup.module';
+import { IamModule } from './iam/iam.module';
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { SignupModule } from './signup/signup.module';
       inject: [ConfigService],
     }),
     // Our business logic
-    SignupModule
+    IamModule
   ]
 })
 

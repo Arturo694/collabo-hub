@@ -1,2 +1,2 @@
-export * from './dtos/signup/request';
-export * from './dtos/signup/response';
+export * from './dtos/iam/request';
+export * from './dtos/iam/response';

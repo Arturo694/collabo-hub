@@ -1,11 +1,11 @@
 import axios from "axios";
-import type { CreateUserRequest, CreateUserResponse } from '@collabo-hub/shared'
+import type { IamSignupRequest, IamSignupResponse } from '@collabo-hub/shared'
 
-export default async function createUser(
-    data: CreateUserRequest
-): Promise<CreateUserResponse> {
-    const res = await axios.post<CreateUserResponse>(
-        "http://localhost:3000/api/auth/sign-up",
+export default async function iamSignup(
+    data: IamSignupRequest
+): Promise<IamSignupResponse> {
+    const res = await axios.post<IamSignupResponse>(
+        "http://localhost:3000/api/iam/signup",
         data
     );
 
