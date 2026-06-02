@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../schemas/user.schema';
-import type { IamSignupRequest } from '@collabo-hub/shared';
+import type { IamSignUpRequest } from '@collabo-hub/shared';
 
 @Injectable()
 export class IamService {
@@ -21,7 +21,7 @@ export class IamService {
         return user ? true : false;
     }
 
-    async createUser(iamSignupRequest: IamSignupRequest): Promise<UserDocument> {
+    async createUser(iamSignupRequest: IamSignUpRequest): Promise<UserDocument> {
         const user = new this.userModel(iamSignupRequest);
         return user.save();
     }

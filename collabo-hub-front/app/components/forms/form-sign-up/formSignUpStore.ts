@@ -10,6 +10,7 @@ class FormSignUpStore {
     showPassword: boolean = false;
     showConfirmPassword: boolean = false;
     validationErrors: string[] = [];
+    isLoading: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -23,6 +24,7 @@ class FormSignUpStore {
     setShowPassword(showPassword: boolean) { this.showPassword = showPassword; }
     setShowConfirmPassword(showConfirmPassword: boolean) { this.showConfirmPassword = showConfirmPassword; }
     setValidationErrors(errors: string[]) { this.validationErrors = errors; }
+    setIsLoading(isLoading: boolean) { this.isLoading = isLoading; }
 
     reset() {
         this.userName = '';
@@ -33,6 +35,7 @@ class FormSignUpStore {
         this.showPassword = false;
         this.showConfirmPassword = false;
         this.validationErrors = [];
+        this.isLoading = false;
     }
 }
 

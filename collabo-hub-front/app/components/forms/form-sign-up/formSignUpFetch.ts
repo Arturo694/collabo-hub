@@ -1,24 +1,24 @@
 import axios from "axios";
-import type { IamSignupRequest, IamSignupResponse } from '@collabo-hub/shared'
+import type { IamSignUpRequest, IamSignUpResponse } from '@collabo-hub/shared'
 
-export class ValidationError extends Error {
+export class ValidationIamSignUp extends Error {
     constructor(public readonly messages: Array<string>) {
         super("Validation Error");
-        this.name = "ValidationError";
+        this.name = "ValidationIamSignUp";
     }
 }
 
-export default async function iamSignup(
-    data: IamSignupRequest
-): Promise<IamSignupResponse> {
+export default async function iamSignUp(
+    data: IamSignUpRequest
+): Promise<IamSignUpResponse> {
 
-    const res = await axios.post<IamSignupResponse>(
+    const res = await axios.post<IamSignUpResponse>(
         "http://localhost:3000/iam/signup",
         data
     );
 
     if (!res.data.success)
-        throw new ValidationError(res.data.messages);
+        throw new ValidationIamSignUp(res.data.messages);
 
     return res.data;
 }

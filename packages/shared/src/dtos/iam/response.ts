@@ -1,4 +1,4 @@
-export interface IamSignupResponse {
+export interface IamSignUpResponse {
     success: boolean;
     messages: Array<string>;
 }

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { IamService } from './iam.service';
-import type { IamSignupRequest, IamSignupResponse } from '@collabo-hub/shared';
+import type { IamSignUpRequest, IamSignUpResponse } from '@collabo-hub/shared';
 
 
 @Controller('iam')
@@ -8,7 +8,7 @@ export class IamController {
   constructor(private readonly iamService: IamService) { }
 
   @Post('signup')
-  async signup(@Body() iamSignupRequest: IamSignupRequest): Promise<IamSignupResponse> {
+  async signup(@Body() iamSignupRequest: IamSignUpRequest): Promise<IamSignUpResponse> {
 
     const [existEmail, existAtSign] = await Promise.all([
       this.iamService.checkUserByEmail(iamSignupRequest.email),
