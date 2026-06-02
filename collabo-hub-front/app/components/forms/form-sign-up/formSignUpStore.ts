@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class SignUpStore {
+class FormSignUpStore {
 
     userName: string = '';
     email: string = '';
@@ -36,4 +36,4 @@ class SignUpStore {
     }
 }
 
-export default SignUpStore
+export default FormSignUpStore

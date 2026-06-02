@@ -1,6 +1,6 @@
-import type { Route } from "./+types/join";
+import type { Route } from "./+types/signup";
 import { Link } from "react-router";
-import SignUpView from "../components/sign-up/ui";
+import FormSignUp from "../components/forms/form-sign-up/FormSignUp";
 
 
 export function meta({ }: Route.MetaArgs) {
@@ -15,7 +15,7 @@ export function meta({ }: Route.MetaArgs) {
     ];
 }
 
-export default function Join() {
+export default function SignUp() {
 
     return (
         <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-5 py-16">
@@ -26,7 +26,7 @@ export default function Join() {
                 <p className="font-outfit text-sm text-neutral-500 mb-6">
                     Start collaborating today.
                 </p>
-                <SignUpView />
+                <FormSignUp />
                 <p className="font-outfit text-xs text-neutral-500 text-center mt-6">
                     Already have an account?{" "}
                     <Link to="/signin" className="text-custom-blue hover:underline font-medium">Sign in</Link>

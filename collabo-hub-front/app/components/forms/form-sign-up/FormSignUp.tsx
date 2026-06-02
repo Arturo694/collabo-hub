@@ -9,17 +9,17 @@ import {
 
 import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
-import { SignupSchema, type SignUpData } from "./validation";
-import SignUpStore from "./model";
-import iamSignup from "./fetch";
+import { FormSignUpSchema, type FormSignUpData } from "./formSignUpValidation";
+import FormSignUpStore from "./formSignUpStore";
+import iamSignup from "./formSignUpFetch";
 
 
-const SignUpView = observer(({ store }: { store: SignUpStore }) => {
+const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        const data: SignUpData = {
+        const data: FormSignUpData = {
             userName: store.userName,
             email: store.email,
             password: store.password,
@@ -28,7 +28,7 @@ const SignUpView = observer(({ store }: { store: SignUpStore }) => {
         };
 
         try {
-            SignupSchema.parse(data);
+            FormSignUpSchema.parse(data);
             const res = await iamSignup({
                 username: store.userName,
                 email: store.email,
@@ -159,6 +159,6 @@ const SignUpView = observer(({ store }: { store: SignUpStore }) => {
     );
 })
 
-export default function SignUpViewWrapper() {
-    return <SignUpView store={new SignUpStore()} />
+export default function FormSignUp() {
+    return <FormSignUpView store={new FormSignUpStore()} />
 }
