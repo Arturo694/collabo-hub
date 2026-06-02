@@ -1,6 +1,7 @@
 packages:
   - 'collabo-hub-back'
   - 'collabo-hub-front'
+  - 'packages/*'
 
 allowBuilds:
   '@nestjs/core': true
