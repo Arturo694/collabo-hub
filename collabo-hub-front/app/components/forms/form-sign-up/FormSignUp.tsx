@@ -6,7 +6,7 @@ import {
     LuUser,
     LuAtSign
 } from "react-icons/lu";
-
+import { useNavigate } from "react-router";
 import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { FormSignUpSchema, type FormSignUpData } from "./formSignUpValidation";
@@ -15,6 +15,7 @@ import iamSignup from "./formSignUpFetch";
 
 
 const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
@@ -47,6 +48,8 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
                 store.setValidationErrors(
                     error.issues.map(err => err.message)
                 );
+            } else {
+                navigate("/error");
             }
         }
     };
