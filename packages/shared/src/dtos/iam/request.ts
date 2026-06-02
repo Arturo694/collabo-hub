@@ -1,5 +1,5 @@
 export interface IamSignupRequest {
-    username: string;
+    name: string;
     email: string;
     password: string;
     atSign: string;

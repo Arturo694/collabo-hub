@@ -13,7 +13,7 @@ export class User {
     password: string;
 
     @Prop({ required: true, unique: true })
-    atsignal: string;
+    atSign: string;
 
     @Prop({ default: Date.now })
     joined: Date;

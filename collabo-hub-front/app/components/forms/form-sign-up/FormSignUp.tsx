@@ -11,7 +11,7 @@ import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { FormSignUpSchema, type FormSignUpData } from "./formSignUpValidation";
 import FormSignUpStore from "./formSignUpStore";
-import iamSignup from "./formSignUpFetch";
+import iamSignup, { ValidationError } from "./formSignUpFetch";
 
 
 const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
@@ -21,7 +21,7 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
         e.preventDefault();
 
         const data: FormSignUpData = {
-            userName: store.userName,
+            name: store.userName,
             email: store.email,
             password: store.password,
             confirmPassword: store.confirmPassword,
@@ -30,27 +30,32 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
 
         try {
             FormSignUpSchema.parse(data);
-            const res = await iamSignup({
-                username: store.userName,
+
+            await iamSignup({
+                name: store.userName,
                 email: store.email,
                 password: store.password,
                 atSign: store.atSign
             });
 
-            if (!res.success) {
-                store.setValidationErrors(res.messages);
-                return;
-            }
-
             store.reset();
+
+            // Use navigate to dashboard
+            // navigate("/dashboard");
         } catch (error) {
             if (error instanceof ZodError) {
                 store.setValidationErrors(
-                    error.issues.map(err => err.message)
+                    error.issues.map((err) => err.message)
                 );
-            } else {
-                navigate("/error");
+                return;
             }
+
+            if (error instanceof ValidationError) {
+                store.setValidationErrors(error.messages);
+                return;
+            }
+
+            navigate("/error");
         }
     };
 

@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 export const FormSignUpSchema = z.object({
-    userName:
+    name:
         z.string()
             .min(3, "Username must be at least 3 characters long")
             .max(20, "Username must be at most 20 characters long")
@@ -20,6 +20,7 @@ export const FormSignUpSchema = z.object({
             .startsWith("@", "At sign must start with @")
             .min(5, "At sign must be at least 5 characters long")
             .max(20, "At sign must be at most 20 characters long")
+            .regex(/^\S+$/, "At sign must not contain spaces")
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match"
 });
