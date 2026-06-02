@@ -11,15 +11,15 @@ import {
   render
 } from 'react-email';
 
-interface WelcomeProps {
+export interface WelcomeProps {
   username: string;
   atSign: string;
 }
 
-export default function welcomeEmail(
+export async function WelcomeEmail(
   { username, atSign }: WelcomeProps
 ): Promise<string> {
-  return render((
+  return await render((
     <Html lang="en">
       <Head />
       <Body style={main}>
