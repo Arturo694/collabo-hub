@@ -5,7 +5,7 @@ export default async function iamSignup(
     data: IamSignupRequest
 ): Promise<IamSignupResponse> {
     const res = await axios.post<IamSignupResponse>(
-        "http://localhost:3000/api/iam/signup",
+        "http://localhost:3000/iam/signup",
         data
     );
 
