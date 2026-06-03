@@ -5,5 +5,5 @@ export interface IamSignUpResponse {
 
 export interface IamSignInResponse {
     success: boolean;
-    token: string;
+    message: string;
 }

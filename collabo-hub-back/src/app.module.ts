@@ -42,6 +42,9 @@ import { IamModule } from './iam/iam.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
+        signOptions: {
+          expiresIn: '7d'
+        }
       }),
       inject: [ConfigService],
     }),

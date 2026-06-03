@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
+import type { Response } from 'express'
 import { IamService } from './iam.service';
 import type {
   IamSignUpRequest,
@@ -38,12 +39,23 @@ export class IamController {
 
   @Post('signin')
   async signin(
-    @Body() iamSignInRequest: IamSignInRequest
+    @Body() iamSignInRequest: IamSignInRequest,
+    @Res({ passthrough: true }) response: Response
   ): Promise<IamSignInResponse> {
 
     const token = await this.iamService.generateTokenSignIn(iamSignInRequest);
-    if (!token) return { success: false, token: 'Invalid credentials' };
+    if (!token) return { success: false, message: 'Invalid credentials' };
 
-    return { success: true, token, };
+    response.cookie(
+      'token', token,
+      {
+        httpOnly: true,
+        signed: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+      }
+    )
+
+    return { success: true, message: 'User signed in successfully' };
   }
 }

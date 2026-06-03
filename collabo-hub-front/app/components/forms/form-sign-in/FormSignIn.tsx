@@ -13,7 +13,7 @@ import iamSignIn, { ValidationIamSignIn } from "./formSignInFetch";
 const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
         store.setIsLoading(true);
 
@@ -27,7 +27,7 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
             navigate("/dashboard");
         } catch (error) {
             if (error instanceof ValidationIamSignIn) {
-                store.setValidationErrors(error.message);
+                store.setValidationErrors(error.messageError);
                 return;
             }
 

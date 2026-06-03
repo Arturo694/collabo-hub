@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ConsoleLogger } from '@nestjs/common';
 import { AppModule } from './app.module';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -8,6 +9,10 @@ async function bootstrap() {
       prefix: 'collabo-hub-backend'
     })
   });
+
+  app.use(cookieParser(
+    process.env.JWT_SECRET
+  ));
 
   app.enableCors({
     origin: 'http://localhost:5173',
