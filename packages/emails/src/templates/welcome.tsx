@@ -6,7 +6,6 @@ import {
   Container,
   Section,
   Text,
-  Img,
   Hr,
   render
 } from 'react-email';
@@ -25,29 +24,29 @@ export async function WelcomeEmail(
       <Body style={main}>
         <Container style={container}>
           <Section style={box}>
-            <Img
-              src="https://collabo-hub.app/logo.png"
-              width="40"
-              height="40"
-              alt="Collabo Hub"
-            />
-
-            <Text style={heading}>Welcome to Collabo Hub, {username}!</Text>
-
-            <Text style={paragraph}>
-              Your account has been created successfully. You can now be
-              mentioned by other team members using{' '}
-              <Text style={atsign}>{atSign}</Text>.
+            <Text style={badge}>SYSTEM NOTIFICATION</Text>
+            
+            <Text style={heading}>
+              Welcome aboard, <span style={highlight}>{username}</span>.
             </Text>
 
             <Text style={paragraph}>
-              Start collaborating, assign tasks, and keep your team in sync.
+              Your account has been successfully provisioned. You are now ready to collaborate and can be referenced by your team members using your unique identifier:
+            </Text>
+
+            <Section style={codeBox}>
+              <Text style={codeText}>{atSign}</Text>
+            </Section>
+
+            <Text style={paragraph}>
+              Initialize your first project, assign tasks, and keep your team in sync with real-time updates.
             </Text>
 
             <Hr style={hr} />
 
             <Text style={footer}>
-              Collabo Hub — Collaborate better, build faster.
+              Collabo Hub <br />
+              <span style={footerMuted}>Secure, fast, and modern collaboration.</span>
             </Text>
           </Section>
         </Container>
@@ -57,50 +56,83 @@ export async function WelcomeEmail(
 }
 
 const main = {
-  backgroundColor: '#f6f9fc',
-  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+  backgroundColor: '#fafafa',
+  fontFamily: '"Outfit", "Gabarito", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 };
 
 const container = {
   margin: '0 auto',
-  padding: '20px 0 48px',
+  padding: '60px 20px',
+  maxWidth: '560px',
 };
 
 const box = {
-  background: '#ffffff',
-  borderRadius: '8px',
-  padding: '40px',
+  backgroundColor: '#ffffff',
+  border: '1px solid #e5e5e5',
+  borderRadius: '12px',
+  padding: '48px',
+};
+
+const badge = {
+  fontSize: '11px',
+  fontWeight: '600',
+  letterSpacing: '3px',
+  color: '#0b0b1c',
+  margin: '0 0 24px',
+  textTransform: 'uppercase' as const,
 };
 
 const heading = {
-  fontSize: '24px',
-  fontWeight: '600',
-  color: '#1a1a1a',
-  margin: '20px 0 12px',
+  fontSize: '28px',
+  fontWeight: '700',
+  color: '#0b0b1c',
+  margin: '0 0 16px',
+  lineHeight: '1.2',
+  letterSpacing: '-0.5px',
+};
+
+const highlight = {
+  color: '#525252',
 };
 
 const paragraph = {
   fontSize: '16px',
-  lineHeight: '1.5',
+  lineHeight: '1.6',
   color: '#525252',
-  margin: '8px 0',
+  margin: '0 0 24px',
 };
 
-const atsign = {
-  fontSize: '16px',
+const codeBox = {
+  backgroundColor: '#f3f4f6', // Neutral-100 fallback for light gray
+  border: '1px solid #e5e7eb',
+  borderRadius: '8px',
+  padding: '16px',
+  margin: '24px 0',
+  textAlign: 'center' as const,
+};
+
+const codeText = {
+  fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+  fontSize: '18px',
   fontWeight: '600',
-  color: '#2563eb',
+  color: '#0b0b1c',
   margin: '0',
-  display: 'inline',
+  letterSpacing: '1px',
 };
 
 const hr = {
   borderColor: '#e5e5e5',
-  margin: '24px 0',
+  margin: '32px 0 24px',
 };
 
 const footer = {
-  fontSize: '12px',
-  color: '#a3a3a3',
+  fontSize: '13px',
+  lineHeight: '1.5',
+  color: '#0b0b1c',
   textAlign: 'center' as const,
+  margin: '0',
+};
+
+const footerMuted = {
+  color: '#737373',
 };

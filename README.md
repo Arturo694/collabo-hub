@@ -9,7 +9,8 @@ collabo-hub/
 ├── collabo-hub-back/       # API backend (NestJS)
 ├── collabo-hub-front/      # Frontend (React Router)
 ├── packages/
-│   └── shared/             # Shared DTOs and types (see below)
+│   ├── shared/             # Shared DTOs and types (see below)
+│   └── emails/             # Email templates (compiled to dist/)
 ├── pnpm-workspace.yaml     # Workspace config
 └── package.json            # Shared scripts
 ```
@@ -42,6 +43,20 @@ import { SignupRequest, SignupResponse } from '@collabo-hub/shared';
 ### Adding a new shared package
 
 Create a new folder under `packages/` with a `package.json` containing a `"name": "@collabo-hub/<name>"` and add it to the workspace. No need to edit `pnpm-workspace.yaml` — the `packages/*` glob covers all subdirectories.
+
+## Email Templates (`@collabo-hub/emails`)
+
+Email templates live in `packages/emails/src/templates/` as `.tsx` files and are **compiled to `dist/`** before the backend can use them.
+
+### Updating a template
+
+After editing a template file, rebuild the package:
+
+```bash
+pnpm --filter @collabo-hub/emails build
+```
+
+> The root `dev:back` and `build:back` scripts already run this automatically, but if you're iterating on emails independently, run the command above.
 
 ## Scripts
 
