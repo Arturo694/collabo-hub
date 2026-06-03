@@ -5,9 +5,10 @@ import {
     LuEyeOff,
     LuShield
 } from "react-icons/lu";
+import { observer } from "mobx-react-lite";
+import FormSignInStore from "./formSignInStore";
 
-export default function FormSignIn() {
-
+const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
     return (
         <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             <div>
@@ -18,8 +19,8 @@ export default function FormSignIn() {
                     <LuMail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
                     <input
                         type="email"
-                        // value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
+                        value={store.email}
+                        onChange={(e) => store.setEmail(e.target.value)}
                         placeholder="you@example.com"
                         className="w-full border border-neutral-200 rounded-lg pl-10 pr-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
                     />
@@ -38,28 +39,28 @@ export default function FormSignIn() {
                 <div className="relative">
                     <LuLock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
                     <input
-                        type="password"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        type={store.showPassword ? "text" : "password"}
+                        value={store.password}
+                        onChange={(e) => store.setPassword(e.target.value)}
                         placeholder="Your password"
-                        className="w-full border border-neutral-200 rounded-lg pl-10 pr-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
+                        className="w-full border border-neutral-200 rounded-lg pl-10 pr-10 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
                     />
                     <button
                         type="button"
-                        // onClick={() => setShowPassword(!showPassword)}
+                        onClick={() => store.setShowPassword(!store.showPassword)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
                     >
-                        {/* {showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />} */}
+                        {store.showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />}
                     </button>
                 </div>
             </div>
 
             <button
                 type="submit"
-                // disabled={isLoading}
+                disabled={store.isLoading}
                 className="w-full bg-custom-blue hover:opacity-90 disabled:opacity-70 text-white font-outfit font-medium px-6 py-3 rounded-xl transition-all text-sm flex items-center justify-center gap-2"
             >
-                {/* {isLoading ? (
+                {store.isLoading ? (
                     <>
                         <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -69,7 +70,7 @@ export default function FormSignIn() {
                     </>
                 ) : (
                     "Sign in"
-                )} */}
+                )}
             </button>
 
             <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4 flex items-start gap-3">
@@ -85,4 +86,9 @@ export default function FormSignIn() {
             </div>
         </form>
     );
+})
+
+
+export default function FormSignIn() {
+    return <FormSignInView store={new FormSignInStore()} />
 }

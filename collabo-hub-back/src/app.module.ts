@@ -21,6 +21,7 @@ import { IamModule } from './iam/iam.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         transport: {
+          service: configService.get<string>('SERVICE_EMAIL'),
           host: configService.get<string>('HOST_EMAIL'),
           port: configService.get<number>('PORT_EMAIL'),
           auth: {

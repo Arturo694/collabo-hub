@@ -4,3 +4,8 @@ export interface IamSignUpRequest {
     password: string;
     atSign: string;
 }
+
+export interface IamSignInRequest {
+    email: string;
+    password: string;
+}

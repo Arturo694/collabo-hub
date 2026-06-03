@@ -1,7 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { IamService } from './iam.service';
-import type { IamSignUpRequest, IamSignUpResponse } from '@collabo-hub/shared';
+import type {
+  IamSignUpRequest,
+  IamSignUpResponse,
+  IamSignInRequest
+} from '@collabo-hub/shared';
 import { wrapperWelcomeEmail } from '@collabo-hub/emails'
 
 
@@ -13,7 +17,9 @@ export class IamController {
   ) { }
 
   @Post('signup')
-  async signup(@Body() iamSignupRequest: IamSignUpRequest): Promise<IamSignUpResponse> {
+  async signup(
+    @Body() iamSignupRequest: IamSignUpRequest
+  ): Promise<IamSignUpResponse> {
 
     const [existEmail, existAtSign] = await Promise.all([
       this.iamService.checkUserByEmail(iamSignupRequest.email),
@@ -31,13 +37,19 @@ export class IamController {
     await this.mailerService.sendMail({
       to: iamSignupRequest.email,
       subject: 'Welcome to Collabo Hub',
-      html: '<h1>Welcome to Collabo Hub</h1>',
-      // html: await wrapperWelcomeEmail({
-      //   username: iamSignupRequest.name,
-      //   atSign: iamSignupRequest.atSign,
-      // }),
+      html: await wrapperWelcomeEmail({
+        username: iamSignupRequest.name,
+        atSign: iamSignupRequest.atSign,
+      }),
     })
 
     return { success: true, messages: ['User created successfully'] };
+  }
+
+  @Post('signin')
+  async signin(
+    @Body() iamSignInRequest: IamSignInRequest
+  ) {
+
   }
 }

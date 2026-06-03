@@ -40,9 +40,7 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
             });
 
             store.reset();
-
-            // Use navigate to dashboard
-            // navigate("/dashboard");
+            navigate("/signin");
         } catch (error) {
             if (error instanceof ZodError) {
                 store.setValidationErrors(
