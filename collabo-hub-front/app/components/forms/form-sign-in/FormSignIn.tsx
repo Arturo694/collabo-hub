@@ -8,7 +8,7 @@ import {
 } from "react-icons/lu";
 import { observer } from "mobx-react-lite";
 import FormSignInStore from "./formSignInStore";
-import iamSignIn from "./formSignInFetch";
+import iamSignIn, { ValidationIamSignIn } from "./formSignInFetch";
 
 const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
     const navigate = useNavigate();
@@ -26,10 +26,12 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
             store.reset();
             navigate("/dashboard");
         } catch (error) {
-            if (error instanceof Error) {
+            if (error instanceof ValidationIamSignIn) {
                 store.setValidationErrors(error.message);
                 return;
             }
+
+            navigate("/error");
         } finally {
             store.setIsLoading(false);
         }
@@ -99,7 +101,7 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
                 )}
             </button>
 
-            {store.validationErrors.length > 0 && (
+            {store.validationErrors && (
                 <p className="text-xs text-red-600 font-outfit text-center">{store.validationErrors}</p>
             )}
 

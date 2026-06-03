@@ -38,6 +38,7 @@ import { IamModule } from './iam/iam.module';
     }),
     // JWT
     JwtModule.registerAsync({
+      global: true,
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
