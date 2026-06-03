@@ -31,10 +31,11 @@ export class IamController {
     await this.mailerService.sendMail({
       to: iamSignupRequest.email,
       subject: 'Welcome to Collabo Hub',
-      html: await wrapperWelcomeEmail({
-        username: iamSignupRequest.name,
-        atSign: iamSignupRequest.atSign,
-      }),
+      html: '<h1>Welcome to Collabo Hub</h1>',
+      // html: await wrapperWelcomeEmail({
+      //   username: iamSignupRequest.name,
+      //   atSign: iamSignupRequest.atSign,
+      // }),
     })
 
     return { success: true, messages: ['User created successfully'] };

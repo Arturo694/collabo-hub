@@ -12,6 +12,8 @@ export default [
         route("/resources", "./routes/resources.tsx"),
         route("/pricing", "./routes/pricing.tsx"),
         route("/signup", "./routes/signup.tsx"),
+        route("/signin", "./routes/signin.tsx"),
+        route("/enterprise", "./routes/enterprise.tsx"),
         route("/error", "./routes/error.tsx"),
         route("*", "./routes/404.tsx"),
     ]),

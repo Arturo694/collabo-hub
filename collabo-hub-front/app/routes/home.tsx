@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   LuX,
   LuClock,
@@ -13,6 +14,8 @@ import {
 } from "react-icons/lu";
 
 export default function Home() {
+  const [now, setNow] = useState<string | null>(null);
+  useEffect(() => { setNow(new Date().toLocaleTimeString()); }, []);
   return (
     <div className="mx-auto max-w-5xl px-5 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-5">
       <div>
@@ -86,7 +89,7 @@ export default function Home() {
               High Priority
             </span>
             <span className="flex items-center gap-1 text-xs text-neutral-400 font-outfit">
-              <LuClock size={14} /> {new Date().toDateString()}
+              <LuClock size={14} /> {now ? new Date(now).toDateString() : ""}
             </span>
           </div>
 
@@ -97,7 +100,7 @@ export default function Home() {
               <span className="text-sm font-outfit">Time Spent on this project</span>
             </div>
             <span className="font-mono text-sm font-semibold">
-              {new Date().toLocaleTimeString()}
+              {now}
             </span>
           </div>
 
