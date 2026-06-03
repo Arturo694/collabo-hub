@@ -12,4 +12,9 @@ export const ROUTES = {
     ABOUT: "/about",
     PRIVACY: "/privacy",
     TERMS: "/terms",
+
+    // ----------- auth ----
+    AUTH_DASHBOARD: "/auth/dashboard",
+    AUTH_CONTACTS: "/auth/contacts",
+
 } as const;

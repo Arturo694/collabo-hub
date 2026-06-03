@@ -18,4 +18,9 @@ export default [
         route(ROUTES.ERROR, "./routes/error.tsx"),
         route("*", "./routes/404.tsx"),
     ]),
+
+    layout("./layouts/ProtectedLayout.tsx", [
+        route(ROUTES.AUTH_DASHBOARD, "./routes/auth/dashboard.tsx"),
+        route(ROUTES.AUTH_CONTACTS, "./routes/auth/contacts.tsx"),
+    ]),
 ] satisfies RouteConfig;
