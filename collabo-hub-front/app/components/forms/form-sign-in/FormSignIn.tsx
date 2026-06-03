@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import { ROUTES } from "../../../lib/routes";
 import {
     LuMail,
     LuLock,
@@ -9,7 +8,7 @@ import {
 } from "react-icons/lu";
 import { observer } from "mobx-react-lite";
 import FormSignInStore from "./formSignInStore";
-import iamSignIn, { ValidationIamSignIn } from "./formSignInFetch";
+import { iamSignIn, ApiError } from "../../../lib/api";
 
 const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
     const navigate = useNavigate();
@@ -27,8 +26,8 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
             store.reset();
             navigate(ROUTES.DASHBOARD);
         } catch (error) {
-            if (error instanceof ValidationIamSignIn) {
-                store.setValidationErrors(error.messageError);
+            if (error instanceof ApiError) {
+                store.setValidationErrors(error.message);
                 return;
             }
 

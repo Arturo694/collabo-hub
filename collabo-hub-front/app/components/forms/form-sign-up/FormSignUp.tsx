@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { FormSignUpSchema, type FormSignUpData } from "./formSignUpValidation";
 import FormSignUpStore from "./formSignUpStore";
-import iamSignUp, { ValidationIamSignUp } from "./formSignUpFetch";
+import { iamSignUp, ApiError } from "../../../lib/api";
 
 
 const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
@@ -50,7 +50,7 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
                 return;
             }
 
-            if (error instanceof ValidationIamSignUp) {
+            if (error instanceof ApiError) {
                 store.setValidationErrors(error.messages);
                 return;
             }
