@@ -7,6 +7,7 @@ import {
     LuAtSign
 } from "react-icons/lu";
 import { useNavigate } from "react-router";
+import { ROUTES } from "../../../lib/routes";
 import { observer } from "mobx-react-lite";
 import { ZodError } from "zod";
 import { FormSignUpSchema, type FormSignUpData } from "./formSignUpValidation";
@@ -40,7 +41,7 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
             });
 
             store.reset();
-            navigate("/signin");
+            navigate(ROUTES.SIGNIN);
         } catch (error) {
             if (error instanceof ZodError) {
                 store.setValidationErrors(
@@ -54,7 +55,7 @@ const FormSignUpView = observer(({ store }: { store: FormSignUpStore }) => {
                 return;
             }
 
-            navigate("/error");
+            navigate(ROUTES.ERROR);
         } finally {
             store.setIsLoading(false);
         }

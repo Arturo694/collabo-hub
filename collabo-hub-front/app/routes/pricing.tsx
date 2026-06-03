@@ -1,5 +1,6 @@
 import { LuCheck, LuZap, LuBuilding2, LuRocket } from "react-icons/lu";
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import type { Route } from "./+types/pricing";
 
 export function meta({}: Route.MetaArgs) {
@@ -70,7 +71,7 @@ export default function Pricing() {
                             <span className="font-gabarito text-4xl font-bold text-custom-blue">${plan.price}</span>
                             <span className="font-outfit text-sm text-neutral-400 ml-1">/mo</span>
                         </div>
-                        <Link to="/join" className={`block text-center font-outfit font-medium text-sm py-2.5 rounded-lg transition-all mb-6 ${plan.popular ? "bg-custom-blue text-white hover:opacity-90" : "border border-neutral-300 text-neutral-700 hover:border-custom-blue hover:text-custom-blue"}`}>
+                        <Link to={ROUTES.JOIN} className={`block text-center font-outfit font-medium text-sm py-2.5 rounded-lg transition-all mb-6 ${plan.popular ? "bg-custom-blue text-white hover:opacity-90" : "border border-neutral-300 text-neutral-700 hover:border-custom-blue hover:text-custom-blue"}`}>
                             {plan.price === 0 ? "Get started free" : "Start free trial"}
                         </Link>
                         <ul className="space-y-3">

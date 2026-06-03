@@ -10,6 +10,7 @@ import {
     LuGitBranch
 } from "react-icons/lu";
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import type { Route } from "./+types/resources";
 
 export function meta({ }: Route.MetaArgs) {
@@ -120,7 +121,7 @@ export default function Resources() {
                         <ul className="space-y-3">
                             {cat.items.map((item) => (
                                 <li key={item}>
-                                    <Link to="/resources" className="flex items-center justify-between text-sm text-neutral-500 hover:text-custom-blue font-outfit transition-colors group">
+                                    <Link to={ROUTES.RESOURCES} className="flex items-center justify-between text-sm text-neutral-500 hover:text-custom-blue font-outfit transition-colors group">
                                         {item}
                                         <LuArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </Link>

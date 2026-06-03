@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { ROUTES } from "../../../lib/routes";
 import {
     LuMail,
     LuLock,
@@ -24,14 +25,14 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
             });
 
             store.reset();
-            navigate("/dashboard");
+            navigate(ROUTES.DASHBOARD);
         } catch (error) {
             if (error instanceof ValidationIamSignIn) {
                 store.setValidationErrors(error.messageError);
                 return;
             }
 
-            navigate("/error");
+            navigate(ROUTES.ERROR);
         } finally {
             store.setIsLoading(false);
         }

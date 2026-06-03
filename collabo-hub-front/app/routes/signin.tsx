@@ -1,5 +1,6 @@
 import type { Route } from "./+types/signin";
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import FormSignIn from "../components/forms/form-sign-in/FormSignIn";
 
 export function meta({ }: Route.MetaArgs) {
@@ -22,7 +23,7 @@ export default function SignIn() {
                 <FormSignIn />
                 <p className="font-outfit text-xs text-neutral-500 text-center mt-6">
                     Don&apos;t have an account?{" "}
-                    <Link to="/signup" className="text-custom-blue hover:underline font-medium">Sign up</Link>
+                    <Link to={ROUTES.SIGNUP} className="text-custom-blue hover:underline font-medium">Sign up</Link>
                 </p>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import { LuArrowLeft } from "react-icons/lu";
 import type { Route } from "./+types/404";
 
@@ -15,7 +16,7 @@ export default function NotFound() {
             <p className="font-outfit text-neutral-500 mt-4 max-w-sm leading-relaxed">
                 The page you're looking for doesn't exist or has been moved.
             </p>
-            <Link to="/" className="inline-flex items-center gap-2 mt-8 bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
+            <Link to={ROUTES.HOME} className="inline-flex items-center gap-2 mt-8 bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
                 <LuArrowLeft size={16} />
                 Go back home
             </Link>

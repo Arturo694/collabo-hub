@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 
 export default function Footer() {
     return (
@@ -13,25 +14,25 @@ export default function Footer() {
                 <div>
                     <h4 className="font-outfit font-semibold text-neutral-800 text-sm mb-3">Product</h4>
                     <ul className="space-y-2 text-sm text-neutral-500 font-outfit">
-                        <li><Link to="/services" className="hover:text-custom-blue transition-colors">Services</Link></li>
-                        <li><Link to="/pricing" className="hover:text-custom-blue transition-colors">Pricing</Link></li>
-                        <li><Link to="/enterprise" className="hover:text-custom-blue transition-colors">Enterprise</Link></li>
+                        <li><Link to={ROUTES.SERVICES} className="hover:text-custom-blue transition-colors">Services</Link></li>
+                        <li><Link to={ROUTES.PRICING} className="hover:text-custom-blue transition-colors">Pricing</Link></li>
+                        <li><Link to={ROUTES.ENTERPRISE} className="hover:text-custom-blue transition-colors">Enterprise</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h4 className="font-outfit font-semibold text-neutral-800 text-sm mb-3">Resources</h4>
                     <ul className="space-y-2 text-sm text-neutral-500 font-outfit">
-                        <li><Link to="/resources" className="hover:text-custom-blue transition-colors">Documentation</Link></li>
-                        <li><Link to="/resources" className="hover:text-custom-blue transition-colors">Blog</Link></li>
-                        <li><Link to="/resources" className="hover:text-custom-blue transition-colors">Support</Link></li>
+                        <li><Link to={ROUTES.RESOURCES} className="hover:text-custom-blue transition-colors">Documentation</Link></li>
+                        <li><Link to={ROUTES.RESOURCES} className="hover:text-custom-blue transition-colors">Blog</Link></li>
+                        <li><Link to={ROUTES.RESOURCES} className="hover:text-custom-blue transition-colors">Support</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h4 className="font-outfit font-semibold text-neutral-800 text-sm mb-3">Company</h4>
                     <ul className="space-y-2 text-sm text-neutral-500 font-outfit">
-                        <li><Link to="/about" className="hover:text-custom-blue transition-colors">About</Link></li>
-                        <li><Link to="/privacy" className="hover:text-custom-blue transition-colors">Privacy</Link></li>
-                        <li><Link to="/terms" className="hover:text-custom-blue transition-colors">Terms</Link></li>
+                        <li><Link to={ROUTES.ABOUT} className="hover:text-custom-blue transition-colors">About</Link></li>
+                        <li><Link to={ROUTES.PRIVACY} className="hover:text-custom-blue transition-colors">Privacy</Link></li>
+                        <li><Link to={ROUTES.TERMS} className="hover:text-custom-blue transition-colors">Terms</Link></li>
                     </ul>
                 </div>
             </div>

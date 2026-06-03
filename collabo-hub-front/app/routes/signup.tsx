@@ -1,5 +1,6 @@
 import type { Route } from "./+types/signup";
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import FormSignUp from "../components/forms/form-sign-up/FormSignUp";
 
 
@@ -29,7 +30,7 @@ export default function SignUp() {
                 <FormSignUp />
                 <p className="font-outfit text-xs text-neutral-500 text-center mt-6">
                     Already have an account?{" "}
-                    <Link to="/signin" className="text-custom-blue hover:underline font-medium">Sign in</Link>
+                    <Link to={ROUTES.SIGNIN} className="text-custom-blue hover:underline font-medium">Sign in</Link>
                 </p>
             </div>
         </div>

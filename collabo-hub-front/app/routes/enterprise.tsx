@@ -8,6 +8,7 @@ import {
     LuCheck
 } from "react-icons/lu";
 import { Link } from "react-router";
+import { ROUTES } from "../lib/routes";
 import type { Route } from "./+types/enterprise";
 
 export function meta({ }: Route.MetaArgs) {
@@ -72,10 +73,10 @@ export default function Enterprise() {
                     Security, scale, and support for organizations that need more than a tool.
                 </p>
                 <div className="flex items-center justify-center gap-3 mt-8">
-                    <Link to="/signup" className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
+                    <Link to={ROUTES.SIGNUP} className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
                         Contact sales
                     </Link>
-                    <Link to="/pricing" className="border border-neutral-300 hover:border-custom-blue text-neutral-700 hover:text-custom-blue font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
+                    <Link to={ROUTES.PRICING} className="border border-neutral-300 hover:border-custom-blue text-neutral-700 hover:text-custom-blue font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm">
                         View pricing
                     </Link>
                 </div>
@@ -102,7 +103,7 @@ export default function Enterprise() {
                         <p className="font-outfit text-sm text-neutral-500 mb-6 leading-relaxed">
                             Get all the power of the Pro plan with additional security, control, and support your organization needs.
                         </p>
-                        <Link to="/signup" className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm inline-block">
+                        <Link to={ROUTES.SIGNUP} className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium px-6 py-3 rounded-lg transition-all text-sm inline-block">
                             Talk to our team
                         </Link>
                     </div>
