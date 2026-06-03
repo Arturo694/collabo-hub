@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { JwtModule } from '@nestjs/jwt';
 import { IamModule } from './iam/iam.module';
 
 @Module({
@@ -32,6 +33,14 @@ import { IamModule } from './iam/iam.module';
         defaults: {
           from: '"Collabo Hub" <noreply@collabohub.com>',
         },
+      }),
+      inject: [ConfigService],
+    }),
+    // JWT
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
       }),
       inject: [ConfigService],
     }),

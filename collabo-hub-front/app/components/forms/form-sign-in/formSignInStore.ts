@@ -4,7 +4,7 @@ class FormSignInStore {
     email: string = '';
     password: string = '';
     showPassword: boolean = false;
-    validationErrors: string[] = [];
+    validationErrors: string = '';
     isLoading: boolean = false;
 
     constructor() {
@@ -14,14 +14,14 @@ class FormSignInStore {
     setEmail(email: string) { this.email = email; }
     setPassword(password: string) { this.password = password; }
     setShowPassword(showPassword: boolean) { this.showPassword = showPassword; }
-    setValidationErrors(errors: string[]) { this.validationErrors = errors; }
+    setValidationErrors(error: string) { this.validationErrors = error; }
     setIsLoading(isLoading: boolean) { this.isLoading = isLoading; }
 
     reset() {
         this.email = '';
         this.password = '';
         this.showPassword = false;
-        this.validationErrors = [];
+        this.validationErrors = '';
         this.isLoading = false;
     }
 }

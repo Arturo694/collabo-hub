@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import {
     LuMail,
     LuLock,
@@ -7,10 +8,35 @@ import {
 } from "react-icons/lu";
 import { observer } from "mobx-react-lite";
 import FormSignInStore from "./formSignInStore";
+import iamSignIn from "./formSignInFetch";
 
 const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        store.setIsLoading(true);
+
+        try {
+            await iamSignIn({
+                email: store.email,
+                password: store.password,
+            });
+
+            store.reset();
+            navigate("/dashboard");
+        } catch (error) {
+            if (error instanceof Error) {
+                store.setValidationErrors(error.message);
+                return;
+            }
+        } finally {
+            store.setIsLoading(false);
+        }
+    };
+
     return (
-        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
                 <label className="font-outfit text-sm font-medium text-neutral-700 mb-2 block">
                     Email
@@ -72,6 +98,10 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
                     "Sign in"
                 )}
             </button>
+
+            {store.validationErrors.length > 0 && (
+                <p className="text-xs text-red-600 font-outfit text-center">{store.validationErrors}</p>
+            )}
 
             <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4 flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-custom-blue/10 flex items-center justify-center text-custom-blue shrink-0 mt-0.5">

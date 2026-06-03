@@ -1,19 +1,17 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
 import { IamService } from './iam.service';
 import type {
   IamSignUpRequest,
   IamSignUpResponse,
-  IamSignInRequest
+  IamSignInRequest,
+  IamSignInResponse
 } from '@collabo-hub/shared';
-import { wrapperWelcomeEmail } from '@collabo-hub/emails'
 
 
 @Controller('iam')
 export class IamController {
   constructor(
     private readonly iamService: IamService,
-    private readonly mailerService: MailerService
   ) { }
 
   @Post('signup')
@@ -34,14 +32,6 @@ export class IamController {
     if (errors.length > 0) return { success: false, messages: errors };
 
     await this.iamService.createUser(iamSignupRequest);
-    await this.mailerService.sendMail({
-      to: iamSignupRequest.email,
-      subject: 'Welcome to Collabo Hub',
-      html: await wrapperWelcomeEmail({
-        username: iamSignupRequest.name,
-        atSign: iamSignupRequest.atSign,
-      }),
-    })
 
     return { success: true, messages: ['User created successfully'] };
   }
@@ -49,7 +39,11 @@ export class IamController {
   @Post('signin')
   async signin(
     @Body() iamSignInRequest: IamSignInRequest
-  ) {
+  ): Promise<IamSignInResponse> {
 
+    const token = await this.iamService.generateTokenSignIn(iamSignInRequest);
+    if (!token) return { success: false, token: 'Invalid credentials' };
+
+    return { success: true, token, };
   }
 }
