@@ -8,6 +8,6 @@ export interface IamSignInResponse {
     message: string;
 }
 
-export interface IamMeResponse {
-    id: string
+export interface IamMe {
+
 }

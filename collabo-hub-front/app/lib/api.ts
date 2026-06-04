@@ -35,8 +35,9 @@ export async function iamSignUp(data: IamSignUpRequest): Promise<IamSignUpRespon
 }
 
 export async function iamMe(cookieHeader?: string | null) {
-    await api.get("/iam/me", {
+    const res = await api.get("/iam/me", {
         headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
         withCredentials: true
-    })
+    });
+    return res.data;
 }

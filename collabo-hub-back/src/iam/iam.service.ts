@@ -27,7 +27,9 @@ export class IamService {
         return user ? true : false;
     }
 
-    async createUser(iamSignupRequest: IamSignUpRequest): Promise<UserDocument> {
+    async createUser(
+        iamSignupRequest: IamSignUpRequest
+    ): Promise<UserDocument> {
         const user = await new this.userModel(iamSignupRequest).save();
 
         await this.mailerService.sendMail({
@@ -45,7 +47,10 @@ export class IamService {
     async generateTokenSignIn(
         iamSignInRequest: IamSignInRequest
     ): Promise<string | null> {
-        const user = await this.userModel.findOne({ email: iamSignInRequest.email }).exec();
+        const user = await this.userModel.findOne({
+            email: iamSignInRequest.email
+        }).exec();
+
         if (!user) return null;
 
         const isValidPassword = await bcrypt.compare(
@@ -56,15 +61,10 @@ export class IamService {
         if (!isValidPassword) return null;
 
         const payload = {
-            email: iamSignInRequest.email,
+            atSign: user.atSign,
             id: user._id.toString(),
         }
 
         return await this.jwtService.signAsync(payload);
     }
-
-    async verifyToken(token: string): Promise<{ email: string; id: string } | null> {
-        return await this.jwtService.verifyAsync<{ email: string; id: string }>(token);
-    }
-
 }

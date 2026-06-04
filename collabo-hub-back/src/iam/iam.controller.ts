@@ -1,13 +1,14 @@
-import { Body, Controller, Get, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
-import type { Request, Response } from 'express'
+import { Body, Controller, Get, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import type { Response } from 'express'
 import { IamService } from './iam.service';
+import { AuthGuard } from '../guards/auth.guard';
+import type { RequestAuth } from '../interfaces/requetsAuth';
 import type {
   IamSignUpRequest,
   IamSignUpResponse,
   IamSignInRequest,
   IamSignInResponse
 } from '@collabo-hub/shared';
-
 
 @Controller('iam')
 export class IamController {
@@ -59,13 +60,14 @@ export class IamController {
     return { success: true, message: 'User signed in successfully' };
   }
 
+  @UseGuards(AuthGuard)
   @Get('me')
   async me(
-    @Req() request: Request
+    @Req() request: RequestAuth
   ) {
-    const token = request.signedCookies['token'];
-    console.log(token, ' porquee');
-    console.log(request.headers.cookie)
+    const { id } = request.tokenData;
+    console.log(id);
+
 
   }
 }
