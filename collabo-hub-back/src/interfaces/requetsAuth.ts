@@ -2,7 +2,7 @@ import { Request } from 'express';
 
 export interface TokenData {
   id: string;
-  email: string;
+  atSign: string;
 }
 
 export interface RequestAuth extends Request {

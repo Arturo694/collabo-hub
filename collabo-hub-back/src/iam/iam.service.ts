@@ -67,4 +67,9 @@ export class IamService {
 
         return await this.jwtService.signAsync(payload);
     }
+
+    async getUserName(id: string): Promise<string | null> {
+        const user = await this.userModel.findById(id).select('name').lean().exec();
+        return user ? user.name : null;
+    }
 }

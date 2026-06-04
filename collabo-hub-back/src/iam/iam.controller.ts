@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards
+} from '@nestjs/common';
 import type { Response } from 'express'
 import { IamService } from './iam.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -7,7 +15,8 @@ import type {
   IamSignUpRequest,
   IamSignUpResponse,
   IamSignInRequest,
-  IamSignInResponse
+  IamSignInResponse,
+  IamMeResponse
 } from '@collabo-hub/shared';
 
 @Controller('iam')
@@ -64,10 +73,13 @@ export class IamController {
   @Get('me')
   async me(
     @Req() request: RequestAuth
-  ) {
-    const { id } = request.tokenData;
-    console.log(id);
+  ): Promise<IamMeResponse> {
+    const { id, atSign } = request.tokenData;
 
+    const name = await this.iamService.getUserName(id);
+    if (name == null)
+      return { success: false, atSign, name: 'No found it' }
 
+    return { success: true, atSign, name, }
   }
 }

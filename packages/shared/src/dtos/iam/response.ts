@@ -8,6 +8,8 @@ export interface IamSignInResponse {
     message: string;
 }
 
-export interface IamMe {
-
+export interface IamMeResponse {
+    success: boolean;
+    name: string;
+    atSign: string
 }

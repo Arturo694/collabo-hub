@@ -3,7 +3,8 @@ import type {
     IamSignInRequest,
     IamSignInResponse,
     IamSignUpRequest,
-    IamSignUpResponse
+    IamSignUpResponse,
+    IamMeResponse
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -34,8 +35,10 @@ export async function iamSignUp(data: IamSignUpRequest): Promise<IamSignUpRespon
     return res.data;
 }
 
-export async function iamMe(cookieHeader?: string | null) {
-    const res = await api.get("/iam/me", {
+export async function iamMe(
+    cookieHeader?: string | null
+): Promise<IamMeResponse> {
+    const res = await api.get<IamMeResponse>("/iam/me", {
         headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
         withCredentials: true
     });
