@@ -16,7 +16,8 @@ import type {
   IamSignUpResponse,
   IamSignInRequest,
   IamSignInResponse,
-  IamMeResponse
+  IamMeResponse,
+  IamSignOutResponse
 } from '@collabo-hub/shared';
 
 @Controller('iam')
@@ -81,5 +82,14 @@ export class IamController {
       return { success: false, atSign, name: 'No found it' }
 
     return { success: true, atSign, name, }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('signout')
+  async signout(
+    @Res({ passthrough: true }) response: Response
+  ): Promise<IamSignOutResponse> {
+    response.clearCookie('token')
+    return { success: true }
   }
 }

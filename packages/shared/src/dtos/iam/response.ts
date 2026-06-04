@@ -13,3 +13,7 @@ export interface IamMeResponse {
     name: string;
     atSign: string
 }
+
+export interface IamSignOutResponse {
+    success: boolean
+}

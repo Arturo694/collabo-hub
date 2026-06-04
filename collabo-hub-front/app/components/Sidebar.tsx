@@ -6,12 +6,17 @@ import {
     LuSettings,
     LuLogOut,
 } from "react-icons/lu";
+import { useNavigate } from "react-router";
+import { ROUTES } from '../lib/routes'
 import type { IamMeResponse } from '@collabo-hub/shared'
+import { iamSignOut } from '../lib/api'
 
 
 export default function Sidebar(
     { atSign, name }: Pick<IamMeResponse, 'atSign' | 'name'>
 ) {
+    const navigate = useNavigate()
+
     return (
         <div className="w-1/4 border-r border-neutral-200 h-screen flex flex-col bg-white">
 
@@ -52,7 +57,12 @@ export default function Sidebar(
 
             {/* Cerrar sesión al fondo */}
             <div className="px-3 py-3 border-t border-neutral-200">
-                <button className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm text-neutral-500 hover:bg-custom-blue hover:text-white transition-colors">
+                <button
+                    onClick={async () => {
+                        await iamSignOut()
+                        navigate(ROUTES.SIGNIN)
+                    }}
+                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm text-neutral-500 hover:bg-custom-blue hover:text-white transition-colors">
                     <LuLogOut size={17} />
                     <span>Sign out</span>
                 </button>
