@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import type { Response } from 'express'
+import { Body, Controller, Get, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
+import type { Request, Response } from 'express'
 import { IamService } from './iam.service';
 import type {
   IamSignUpRequest,
@@ -51,11 +51,21 @@ export class IamController {
       {
         httpOnly: true,
         signed: true,
-        sameSite: 'strict',
+        sameSite: 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
       }
     )
 
     return { success: true, message: 'User signed in successfully' };
+  }
+
+  @Get('me')
+  async me(
+    @Req() request: Request
+  ) {
+    const token = request.signedCookies['token'];
+    console.log(token, ' porquee');
+    console.log(request.headers.cookie)
+
   }
 }

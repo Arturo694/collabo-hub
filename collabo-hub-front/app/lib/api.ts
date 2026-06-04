@@ -8,6 +8,7 @@ import type {
 
 const api = axios.create({
     baseURL: "http://localhost:3000",
+    withCredentials: true,
 });
 
 export class ApiError extends Error {
@@ -31,4 +32,11 @@ export async function iamSignUp(data: IamSignUpRequest): Promise<IamSignUpRespon
     const res = await api.post<IamSignUpResponse>("/iam/signup", data);
     if (!res.data.success) throw new ApiError(res.data.messages);
     return res.data;
+}
+
+export async function iamMe(cookieHeader?: string | null) {
+    await api.get("/iam/me", {
+        headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
+        withCredentials: true
+    })
 }

@@ -42,7 +42,6 @@ export class IamService {
         return user;
     }
 
-
     async generateTokenSignIn(
         iamSignInRequest: IamSignInRequest
     ): Promise<string | null> {
@@ -64,5 +63,8 @@ export class IamService {
         return await this.jwtService.signAsync(payload);
     }
 
+    async verifyToken(token: string): Promise<{ email: string; id: string } | null> {
+        return await this.jwtService.verifyAsync<{ email: string; id: string }>(token);
+    }
 
 }

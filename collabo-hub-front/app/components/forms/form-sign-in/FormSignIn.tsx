@@ -9,6 +9,7 @@ import {
 import { observer } from "mobx-react-lite";
 import FormSignInStore from "./formSignInStore";
 import { iamSignIn, ApiError } from "../../../lib/api";
+import { ROUTES } from '../../../lib/routes'
 
 const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const FormSignInView = observer(({ store }: { store: FormSignInStore }) => {
             });
 
             store.reset();
-            navigate(ROUTES.DASHBOARD);
+            navigate(ROUTES.AUTH_DASHBOARD);
         } catch (error) {
             if (error instanceof ApiError) {
                 store.setValidationErrors(error.message);
