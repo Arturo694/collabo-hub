@@ -5,20 +5,36 @@ import {
     LuBookOpen,
     LuSettings,
     LuLogOut,
+    LuChevronsUpDown,
+    LuStickyNote,
+    LuMilestone
 } from "react-icons/lu";
-import { useNavigate } from "react-router";
+import { useNavigate, Link, useLocation } from "react-router";
 import { ROUTES } from '../lib/routes'
 import type { IamMeResponse } from '@collabo-hub/shared'
 import { iamSignOut } from '../lib/api'
 
-
 export default function Sidebar(
     { atSign, name }: Pick<IamMeResponse, 'atSign' | 'name'>
 ) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const OVERVIEW_MENU = [
+        { label: 'Home', icon: LuLayoutDashboard, path: ROUTES.AUTH_DASHBOARD },
+        { label: 'My teams', icon: LuHouse, path: '/auth/teams', badge: '3' },
+        { label: 'Tasks', icon: LuClipboardList, path: '/auth/tasks', badge: '12' },
+        { label: 'Notes', icon: LuStickyNote, path: '/auth/notes' },
+        { label: 'Phases', icon: LuMilestone, path: '/auth/phases' },
+        { label: 'Contacts', icon: LuBookOpen, path: ROUTES.AUTH_CONTACTS },
+    ];
+
+    const SETTINGS_MENU = [
+        { label: 'Settings', icon: LuSettings, path: '/auth/preferences' },
+    ];
 
     return (
-        <div className="w-1/4 border-r border-neutral-200 h-screen flex flex-col bg-white">
+        <aside className="w-1/4 border-r border-neutral-200 h-screen flex flex-col bg-white">
 
             {/* Usuario */}
             <div className="px-4 py-5 border-b border-neutral-200">
@@ -37,22 +53,65 @@ export default function Sidebar(
                 </div>
             </div>
 
-            {/* Navegación */}
+            {/* Navegación Principal */}
             <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
                 <p className="font-outfit text-[10px] font-semibold uppercase tracking-widest text-neutral-400 px-2 pb-2">
                     Main menu
                 </p>
 
-                <NavItem icon={LuHouse} label="Home" />
-                <NavItem icon={LuLayoutDashboard} label="My teams" badge="3" active />
-                <NavItem icon={LuClipboardList} label="Tasks" badge="12" />
-                <NavItem icon={LuBookOpen} label="Contacts" />
+                {OVERVIEW_MENU.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    const Icon = item.icon;
+                    
+                    return (
+                        <Link
+                            key={item.label}
+                            to={item.path}
+                            className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm transition-all ${
+                                isActive
+                                    ? "bg-custom-blue text-white font-medium"
+                                    : "text-neutral-600 hover:bg-custom-blue hover:text-white"
+                            }`}
+                        >
+                            <Icon size={17} />
+                            <span className="flex-1 text-left">{item.label}</span>
+                            
+                            {item.badge && (
+                                <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${
+                                    isActive
+                                        ? "bg-white/20 text-white"
+                                        : "bg-custom-blue/10 text-custom-blue"
+                                }`}>
+                                    {item.badge}
+                                </span>
+                            )}
+                        </Link>
+                    )
+                })}
 
                 <p className="font-outfit text-[10px] font-semibold uppercase tracking-widest text-neutral-400 px-2 pt-5 pb-2">
                     Account
                 </p>
 
-                <NavItem icon={LuSettings} label="Settings" />
+                {SETTINGS_MENU.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    const Icon = item.icon;
+                    
+                    return (
+                        <Link
+                            key={item.label}
+                            to={item.path}
+                            className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm transition-all ${
+                                isActive
+                                    ? "bg-custom-blue text-white font-medium"
+                                    : "text-neutral-600 hover:bg-custom-blue hover:text-white"
+                            }`}
+                        >
+                            <Icon size={17} />
+                            <span className="flex-1 text-left">{item.label}</span>
+                        </Link>
+                    )
+                })}
             </nav>
 
             {/* Cerrar sesión al fondo */}
@@ -62,43 +121,12 @@ export default function Sidebar(
                         await iamSignOut()
                         navigate(ROUTES.SIGNIN)
                     }}
-                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm text-neutral-500 hover:bg-custom-blue hover:text-white transition-colors">
+                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm text-neutral-500 hover:bg-custom-blue hover:text-white transition-colors"
+                >
                     <LuLogOut size={17} />
                     <span>Sign out</span>
                 </button>
             </div>
-        </div>
-    );
-}
-
-function NavItem({
-    icon: Icon,
-    label,
-    badge,
-    active = false,
-}: {
-    icon: React.ComponentType<{ size?: number }>;
-    label: string;
-    badge?: string;
-    active?: boolean;
-}) {
-    return (
-        <button
-            className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg font-outfit text-sm transition-all ${active
-                ? "bg-custom-blue text-white font-medium"
-                : "text-neutral-600 hover:bg-custom-blue hover:text-white"
-                }`}
-        >
-            <Icon size={17} />
-            <span className="flex-1 text-left">{label}</span>
-            {badge && (
-                <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${active
-                    ? "bg-white/20 text-white"
-                    : "bg-custom-blue/10 text-custom-blue"
-                    }`}>
-                    {badge}
-                </span>
-            )}
-        </button>
+        </aside>
     );
 }
