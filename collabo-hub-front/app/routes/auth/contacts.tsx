@@ -20,6 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Contacts() {
-    useLoaderData<typeof loader>();
+    const data = useLoaderData<typeof loader>();
+    store.init(data);
     return <ContactsView store={store} />;
 }

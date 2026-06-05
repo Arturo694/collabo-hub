@@ -6,7 +6,9 @@ import type {
     IamSignUpResponse,
     IamMeResponse,
     IamSignOutResponse,
-    ContactsAllMyContactsResponse
+    ContactsAllMyContactsResponse,
+    ContactsCreateContactRequest,
+    ContactsCreateContactResponse
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -70,6 +72,18 @@ export async function contactsSeek(
 ): Promise<ContactsAllMyContactsResponse> {
     const res = await api.get<ContactsAllMyContactsResponse>(`/contacts/searchContacts/${contact}`,
         { withCredentials: true })
+
+    return res.data
+}
+
+export async function createContact(
+    data: ContactsCreateContactRequest
+): Promise<ContactsCreateContactResponse> {
+    const res = await api.post<ContactsCreateContactResponse>(
+        "/contacts/createContact",
+        data,
+        { withCredentials: true }
+    )
 
     return res.data
 }

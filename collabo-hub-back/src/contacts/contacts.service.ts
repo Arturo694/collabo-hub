@@ -27,8 +27,8 @@ export class ContactsService {
       .find({
         $or: [{ user: id }, { contact: id }],
       })
-      .populate('user', '_id name atSign email')
-      .populate('contact', '_id name atSign email')
+      .populate('user', '_id name atSign email joined')
+      .populate('contact', '_id name atSign email joined')
       .exec();
 
     return contacts.map((c) => {

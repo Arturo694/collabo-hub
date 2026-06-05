@@ -18,6 +18,7 @@ import {
 
 import { observer } from "mobx-react-lite";
 import type { Contact, ContactStore } from "./contactStore";
+import { createContact } from '../../lib/api';
 
 export const ContactsView = observer(({ store }: { store: ContactStore }) => {
     return (
@@ -199,7 +200,11 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                                     {c.atSign}
                                                 </p>
                                             </div>
-                                            <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[11px] px-3 py-1.5 rounded-lg transition-all">
+                                            <button
+                                                onClick={async () => {
+                                                    await createContact({ idContact: c.id, email: c.email });
+                                                }}
+                                                className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[11px] px-3 py-1.5 rounded-lg transition-all">
                                                 Conectar
                                             </button>
                                         </div>
