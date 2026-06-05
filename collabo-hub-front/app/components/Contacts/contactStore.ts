@@ -7,18 +7,17 @@ export type Contact = Contacts[number]
 export class ContactStore {
     contacts: Contacts = [];
     search: string = "";
+    searchContacts: string = "";
+    showDialog: boolean = false;
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+    constructor() { makeAutoObservable(this) }
 
-    setSearch(value: string) {
-        this.search = value;
-    }
+    setSearch(value: string) { this.search = value }
+    setSearchContacts(value: string) { this.searchContacts = value }
 
-    init(contacts: Contacts) {
-        this.contacts = contacts;
-    }
+    init(contacts: Contacts) { this.contacts = contacts }
+
+    setDialog(value: boolean) { this.showDialog = value }
 
     get filtered() {
         const q = this.search.toLowerCase();
