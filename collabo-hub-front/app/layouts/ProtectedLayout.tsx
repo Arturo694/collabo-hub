@@ -1,4 +1,9 @@
-import { Outlet, useLoaderData, redirect, type LoaderFunctionArgs } from "react-router";
+import {
+    Outlet,
+    useLoaderData,
+    redirect,
+    type LoaderFunctionArgs
+} from "react-router";
 import { iamMe } from "../lib/api";
 import { ROUTES } from "../lib/routes";
 

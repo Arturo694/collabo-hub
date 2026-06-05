@@ -7,7 +7,7 @@ import {
 import { ContactsService } from './contacts.service';
 import type { RequestAuth } from '../interfaces/requetsAuth';
 import { AuthGuard } from '../guards/auth.guard';
-import { ContactsFindAllMyContactsResponse } from '@collabo-hub/shared'
+import { ContactsAllMyContactsResponse } from '@collabo-hub/shared'
 
 
 @Controller('contacts')
@@ -21,7 +21,7 @@ export class ContactsController {
   @Get('allMyContacts')
   async allMyContacts(
     @Req() request: RequestAuth
-  ): Promise<ContactsFindAllMyContactsResponse> {
+  ): Promise<ContactsAllMyContactsResponse> {
     const { id } = request.tokenData;
     const contacts = await this.contactsService.findAllMyContacts(id);
 

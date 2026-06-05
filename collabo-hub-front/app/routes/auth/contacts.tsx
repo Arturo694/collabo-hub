@@ -1,31 +1,41 @@
 import { useState } from "react";
 import {
     LuSearch,
-    LuPhone,
     LuMail,
     LuX,
     LuPin,
-    LuMessageSquare,
     LuPlus,
     LuAtSign,
     LuCalendarDays,
     LuCircleUser,
+    LuTrash2,
 } from "react-icons/lu";
 
+import {
+    type LoaderFunctionArgs,
+    redirect,
+    useLoaderData
+} from 'react-router'
+import { contactsFindAll } from "../../lib/api";
+import { ROUTES } from "../../lib/routes";
+
 const contacts = [
-    { id: 1, name: "Dad", phone: "+1 (484) 436 50 49", email: "adams_p@gmail.com", atSign: "@dad", joined: "Jan 2024", pinned: true },
-    { id: 2, name: "Mom", phone: "+1 (484) 708 82 76", email: "brenda_adams88@hotmail.com", atSign: "@mom", joined: "Jan 2024", pinned: true },
-    { id: 3, name: "Anna", phone: "+1 (484) 293 88 56", email: "ana_ritchie@hotmail.com", atSign: "@anna", joined: "Mar 2024" },
-    { id: 4, name: "Bobby Crown", phone: "+1 (484) 288 60 28", email: "crown2919@hotmail.com", atSign: "@bobby", joined: "Apr 2024" },
-    { id: 5, name: "Brandon", phone: "+1 (484) 995 84 37", email: "bd88@yahoo.com", atSign: "@brandon", joined: "May 2024" },
-    { id: 6, name: "David", phone: "+1 (484) 322 22 32", email: "dave_d@hotmail.com", atSign: "@david", joined: "Jun 2024" },
-    { id: 7, name: "Diana", phone: "+1 (484) 812 32 01", email: "p1_diana@gmail.com", atSign: "@diana", joined: "Jul 2024" },
-    { id: 8, name: "Gino", phone: "+1 (484) 381 44 56", email: "ginosear@hotmail.com", atSign: "@gino", joined: "Aug 2024" },
-    { id: 9, name: "Jerry", phone: "+1 (484) 132 61 42", email: "jerryco@concretolia.com", atSign: "@jerry", joined: "Sep 2024" },
-    { id: 10, name: "Jeffrey Macejkovic", phone: "+1 (484) 578 90 97", email: "macejkovlc@gmail.com", atSign: "@jeff", joined: "Oct 2024" },
+    { id: 1, name: "Dad", email: "adams_p@gmail.com", atSign: "@dad", joined: "Jan 2024", pinned: true },
+    { id: 2, name: "Mom", email: "brenda_adams88@hotmail.com", atSign: "@mom", joined: "Jan 2024", pinned: true },
+    { id: 3, name: "Anna", email: "ana_ritchie@hotmail.com", atSign: "@anna", joined: "Mar 2024" },
+    { id: 4, name: "Bobby Crown", email: "crown2919@hotmail.com", atSign: "@bobby", joined: "Apr 2024" },
+    { id: 5, name: "Brandon", email: "bd88@yahoo.com", atSign: "@brandon", joined: "May 2024" },
+    { id: 6, name: "David", email: "dave_d@hotmail.com", atSign: "@david", joined: "Jun 2024" },
+    { id: 7, name: "Diana", email: "p1_diana@gmail.com", atSign: "@diana", joined: "Jul 2024" },
+    { id: 8, name: "Gino", email: "ginosear@hotmail.com", atSign: "@gino", joined: "Aug 2024" },
+    { id: 9, name: "Jerry", email: "jerryco@concretolia.com", atSign: "@jerry", joined: "Sep 2024" },
+    { id: 10, name: "Jeffrey Macejkovic", email: "macejkovlc@gmail.com", atSign: "@jeff", joined: "Oct 2024" },
 ];
 
-const AVATAR_COLORS = ["bg-custom-blue", "bg-neutral-600", "bg-neutral-500", "bg-neutral-400"];
+const AVATAR_COLORS = ["bg-custom-blue"];
+
+
+
 
 function Avatar({ name, size = 8 }: { name: string; size?: number }) {
     const initials = name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
@@ -50,14 +60,27 @@ function highlightText(text: string, query: string) {
     );
 }
 
+export async function loader({ request }: LoaderFunctionArgs) {
+    const cookie = request.headers.get("Cookie");
+    if (cookie == null)
+        throw new Error()
+
+    try {
+        const { contacts } = await contactsFindAll(cookie);
+        return contacts
+    } catch (error) {
+        return redirect(ROUTES.SIGNIN);
+    }
+}
+
 export default function Contacts() {
+    const contacts = useLoaderData<typeof loader>();
     const [search, setSearch] = useState("");
 
     const filtered = contacts.filter((c) => {
         const matchSearch =
             c.name.toLowerCase().includes(search.toLowerCase()) ||
             c.email.toLowerCase().includes(search.toLowerCase()) ||
-            c.phone.includes(search) ||
             c.atSign.toLowerCase().includes(search.toLowerCase());
         return matchSearch;
     });
@@ -75,24 +98,14 @@ export default function Contacts() {
                             Manage your contacts and stay connected with your team.
                         </p>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <button className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-outfit font-medium text-sm px-4 py-2.5 rounded-lg transition-all flex items-center gap-2">
-                            <LuPlus size={16} />
-                            Invite to team
-                        </button>
-                        <button className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-outfit font-medium text-sm px-4 py-2.5 rounded-lg transition-all flex items-center gap-2">
-                            <LuMessageSquare size={16} />
-                            Create task
-                        </button>
-                        <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-sm px-5 py-2.5 rounded-lg transition-all flex items-center gap-2">
-                            <LuPlus size={16} />
-                            Add contact
-                        </button>
-                    </div>
+                    <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[13px] px-4 py-2 rounded-full transition-all flex items-center gap-1.5">
+                        <LuPlus size={14} />
+                        Add contact
+                    </button>
                 </div>
 
                 {/* ── SEARCH ── */}
-                <div className="flex items-center gap-2 px-4 h-[42px] bg-neutral-50 rounded-xl border border-neutral-200 focus-within:border-custom-blue/40 transition-colors mb-5">
+                <div className="flex items-center gap-2 px-4 h-10.5 bg-neutral-50 rounded-xl border border-neutral-200 focus-within:border-custom-blue/40 transition-colors mb-5">
                     <LuSearch size={15} className={`shrink-0 transition-colors ${search ? "text-custom-blue" : "text-neutral-400"}`} />
                     <input
                         value={search}
@@ -136,14 +149,10 @@ export default function Contacts() {
 
 /* ── Contact Row ── */
 function ContactRow({ contact, search }: { contact: any; search: string }) {
-    const online = contact.id % 3 !== 0;
     return (
         <div className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-all cursor-pointer">
             {/* Avatar */}
-            <div className="relative">
-                <Avatar name={contact.name} size={10} />
-                <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${online ? "bg-emerald-500" : "bg-neutral-300"}`} />
-            </div>
+            <Avatar name={contact.name} size={10} />
 
             {/* Name + atSign */}
             <div className="flex-1 min-w-0">
@@ -166,11 +175,6 @@ function ContactRow({ contact, search }: { contact: any; search: string }) {
                 </p>
             </div>
 
-            {/* Phone */}
-            <div className="hidden md:block shrink-0">
-                <p className="font-outfit text-[11px] text-neutral-400">{contact.phone}</p>
-            </div>
-
             {/* Joined */}
             <div className="flex items-center gap-1 shrink-0">
                 <LuCalendarDays size={11} className="text-neutral-300" />
@@ -180,13 +184,10 @@ function ContactRow({ contact, search }: { contact: any; search: string }) {
             {/* Actions */}
             <div className="flex items-center gap-1 shrink-0">
                 <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-custom-blue/10 hover:text-custom-blue transition-all">
-                    <LuPhone size={13} />
-                </button>
-                <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-custom-blue/10 hover:text-custom-blue transition-all">
                     <LuMail size={13} />
                 </button>
-                <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-custom-blue/10 hover:text-custom-blue transition-all">
-                    <LuMessageSquare size={13} />
+                <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-red-50 hover:text-red-600 transition-all">
+                    <LuTrash2 size={13} />
                 </button>
             </div>
         </div>

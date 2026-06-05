@@ -5,7 +5,8 @@ import type {
     IamSignUpRequest,
     IamSignUpResponse,
     IamMeResponse,
-    IamSignOutResponse
+    IamSignOutResponse,
+    ContactsAllMyContactsResponse
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -50,4 +51,16 @@ export async function iamSignOut(): Promise<IamSignOutResponse> {
     })
 
     return res.data
-} 
+}
+
+
+export async function contactsFindAll(
+    cookieHeader: string
+): Promise<ContactsAllMyContactsResponse> {
+    const res = await api.get<ContactsAllMyContactsResponse>("/contacts/allMyContacts", {
+        headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
+        withCredentials: true
+    })
+
+    return res.data
+}
