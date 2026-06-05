@@ -11,8 +11,7 @@ import Sidebar from "../components/Sidebar";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const cookie = request.headers.get("Cookie");
-    if (cookie == null)
-        throw new Error()
+    if (cookie == null) throw new Error()
 
     try {
         const user = await iamMe(cookie);
