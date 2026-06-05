@@ -10,14 +10,14 @@ export class Contact {
         ref: 'User',
         required: true
     })
-    user: User;
+    user: User | string;
 
     @Prop({
         type: Types.ObjectId,
         ref: 'User',
         required: true
     })
-    contact: User;
+    contact: User | string;
 
     @Prop({ default: Date.now })
     createdAt: Date;

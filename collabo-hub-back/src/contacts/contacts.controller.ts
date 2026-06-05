@@ -2,7 +2,8 @@ import {
   Controller,
   Get,
   Req,
-  UseGuards
+  UseGuards,
+  Param
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import type { RequestAuth } from '../interfaces/requetsAuth';
@@ -25,6 +26,15 @@ export class ContactsController {
     const { id } = request.tokenData;
     const contacts = await this.contactsService.findAllMyContacts(id);
 
+    return { success: true, contacts, };
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('searchContacts/:contact')
+  async searchContacts(
+    @Param('contact') contact: string
+  ): Promise<ContactsAllMyContactsResponse> {
+    const contacts = await this.contactsService.seekContacts(contact);
     return { success: true, contacts, };
   }
 

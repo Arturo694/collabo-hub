@@ -64,3 +64,12 @@ export async function contactsFindAll(
 
     return res.data
 }
+
+export async function contactsSeek(
+    contact: string
+): Promise<ContactsAllMyContactsResponse> {
+    const res = await api.get<ContactsAllMyContactsResponse>(`/contacts/searchContacts/${contact}`,
+        { withCredentials: true })
+
+    return res.data
+}

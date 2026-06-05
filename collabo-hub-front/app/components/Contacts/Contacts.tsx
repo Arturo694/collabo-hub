@@ -10,7 +10,9 @@ import {
 import {
     Dialog,
     DialogPanel,
-    DialogTitle
+    DialogTitle,
+    Transition,
+    TransitionChild,
 } from '@headlessui/react'
 
 
@@ -40,21 +42,21 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-2 px-4 h-10.5 bg-neutral-50 rounded-xl border border-neutral-200 focus-within:border-custom-blue/40 transition-colors mb-5">
+                    <div className="relative mb-5">
                         <LuSearch
                             size={15}
-                            className={`shrink-0 transition-colors ${store.search ? "text-custom-blue" : "text-neutral-400"}`}
+                            className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${store.search ? "text-custom-blue" : "text-neutral-400"}`}
                         />
                         <input
                             value={store.search}
                             onChange={(e) => store.setSearch(e.target.value)}
                             placeholder="Search contacts..."
-                            className="bg-transparent border-none text-neutral-600 text-[13px] w-full outline-none placeholder:text-neutral-400"
+                            className="w-full border border-neutral-200 rounded-lg pl-10 pr-9 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
                         />
                         {store.search && (
                             <button
                                 onClick={() => store.setSearch("")}
-                                className="text-neutral-400 hover:text-neutral-600 transition-colors"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
                             >
                                 <LuX size={14} />
                             </button>
@@ -129,53 +131,94 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
             </div>
 
             {/* ── Add Contact Dialog ── */}
-            <Dialog open={store.showDialog}
-                onClose={() => store.setDialog(false)}
-                className="relative z-50">
-                <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-                <div className="fixed inset-0 flex items-center justify-center p-4">
-                    <DialogPanel className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <DialogTitle className="font-gabarito text-lg font-bold text-neutral-800">
-                                Add contact
-                            </DialogTitle>
-                            <button
-                                onClick={() => store.setDialog(false)}
-                                className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 transition-all"
-                            >
-                                <LuX size={15} />
-                            </button>
-                        </div>
+            <Transition show={store.showDialog}>
+                <Dialog onClose={() => store.setDialog(false)} className="relative z-50">
+                    <TransitionChild
+                        as="div"
+                        className="fixed inset-0 bg-black/50"
+                        enter="duration-300 ease-out"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="duration-200 ease-in"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    />
+                    <div className="fixed inset-0 flex items-center justify-center p-4">
+                        <TransitionChild
+                            as={DialogPanel}
+                            className="w-full max-w-md min-h-105 bg-white rounded-2xl shadow-xl p-6"
+                            enter="duration-300 ease-out"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="duration-200 ease-in"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="flex items-center justify-between mb-4">
+                                <DialogTitle className="font-gabarito text-lg font-bold text-neutral-800">
+                                    Add contact
+                                </DialogTitle>
+                                <button
+                                    onClick={() => store.setDialog(false)}
+                                    className="w-7 h-7 rounded-lg flex items-center justify-center bg-custom-blue text-white hover:opacity-90 transition-all"
+                                >
+                                    <LuX size={15} />
+                                </button>
+                            </div>
 
-                        <div className="flex items-center gap-2 px-4 h-10 bg-neutral-50 rounded-xl border border-neutral-200 focus-within:border-custom-blue/40 transition-colors mb-4">
-                            <LuSearch size={15} className="shrink-0 text-neutral-400" />
-                            <input
-                                value={store.searchContacts}
-                                onChange={(e) => store.setSearchContacts(e.target.value)}
-                                placeholder="Search by name or @..."
-                                className="bg-transparent border-none text-neutral-600 text-[13px] w-full outline-none placeholder:text-neutral-400"
-                            />
-                        </div>
+                            <div className="relative mb-4">
+                                <LuSearch size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+                                <input
+                                    value={store.searchContacts}
+                                    onChange={(e) => store.setSearchContacts(e.target.value)}
+                                    placeholder="Search by name or @..."
+                                    className="w-full border border-neutral-200 rounded-lg pl-10 pr-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
+                                />
+                            </div>
 
-                        <div className="text-center py-8">
-                            <p className="font-outfit text-[13px] text-neutral-400">
-                                {store.searchContacts
-                                    ? "No users found"
-                                    : "Type a name or @ to find users"}
-                            </p>
-                        </div>
+                            {store.seekLoading ? (
+                                <div className="text-center py-8">
+                                    <p className="font-outfit text-[13px] text-neutral-400">Searching...</p>
+                                </div>
+                            ) : store.seekResults.length > 0 ? (
+                                <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
+                                    {store.seekResults.map((c: Contact) => (
+                                        <div
+                                            key={c.id}
+                                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-all cursor-pointer"
+                                        >
+                                            <div className="w-8 h-8 rounded-full bg-custom-blue flex items-center justify-center text-white font-semibold text-xs shrink-0">
+                                                {c.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-outfit text-[13px] font-semibold text-neutral-800 truncate">
+                                                    {c.name}
+                                                </p>
+                                                <p className="font-outfit text-[11px] text-neutral-500 truncate flex items-center gap-1">
+                                                    <LuAtSign size={10} className="text-neutral-400" />
+                                                    {c.atSign}
+                                                </p>
+                                            </div>
+                                            <button className="w-7 h-7 rounded-lg flex items-center justify-center bg-custom-blue text-white hover:opacity-90 transition-all">
+                                                <LuPlus size={13} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : store.searchContacts ? (
+                                <div className="text-center py-8">
+                                    <p className="font-outfit text-[13px] text-neutral-400">No users found</p>
+                                </div>
+                            ) : (
+                                <div className="text-center py-8">
+                                    <p className="font-outfit text-[13px] text-neutral-400">Type a name or @ to find users</p>
+                                </div>
+                            )}
 
-                        <div className="flex justify-end gap-2 pt-3 border-t border-neutral-100">
-                            <button
-                                onClick={() => store.setDialog(false)}
-                                className="font-outfit text-[13px] px-4 py-2 rounded-lg text-neutral-600 hover:bg-neutral-100 transition-all"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </DialogPanel>
-                </div>
-            </Dialog>
+                        </TransitionChild>
+                    </div>
+                </Dialog>
+            </Transition>
         </>
     );
 });
