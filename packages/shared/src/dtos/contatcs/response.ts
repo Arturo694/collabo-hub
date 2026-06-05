@@ -5,5 +5,6 @@ export interface ContactsAllMyContactsResponse {
         name: string,
         atSign: string,
         email: string,
+        joined: Date
     }>
 }

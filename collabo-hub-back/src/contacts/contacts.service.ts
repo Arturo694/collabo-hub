@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Contact, ContactDocument } from '../../schemas/contacts.schema';
+import { ContactsAllMyContactsResponse } from '@collabo-hub/shared';
 
 
 @Injectable()
@@ -13,12 +14,7 @@ export class ContactsService {
 
   async findAllMyContacts(
     id: string
-  ): Promise<Array<
-    {
-      id: string, name: string,
-      atSign: string, email: string
-    }
-  >> {
+  ): Promise<ContactsAllMyContactsResponse["contacts"]> {
     const contacts = await this.contactModel
       .find({
         or: [{ user: id }, { contact: id }],
@@ -35,6 +31,7 @@ export class ContactsService {
         name: otherUser.name,
         atSign: otherUser.atSign,
         email: otherUser.email,
+        joined: otherUser.joined
       };
     });
   }
