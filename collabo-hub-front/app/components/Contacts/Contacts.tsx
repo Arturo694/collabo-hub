@@ -199,19 +199,23 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                                     {c.atSign}
                                                 </p>
                                             </div>
-                                            <button className="w-7 h-7 rounded-lg flex items-center justify-center bg-custom-blue text-white hover:opacity-90 transition-all">
-                                                <LuPlus size={13} />
+                                            <button className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[11px] px-3 py-1.5 rounded-lg transition-all">
+                                                Conectar
                                             </button>
                                         </div>
                                     ))}
                                 </div>
                             ) : store.searchContacts ? (
                                 <div className="text-center py-8">
-                                    <p className="font-outfit text-[13px] text-neutral-400">No users found</p>
+                                    <p className="font-outfit text-[13px] text-neutral-400">
+                                        No users found
+                                    </p>
                                 </div>
                             ) : (
                                 <div className="text-center py-8">
-                                    <p className="font-outfit text-[13px] text-neutral-400">Type a name or @ to find users</p>
+                                    <p className="font-outfit text-[13px] text-neutral-400">
+                                        Type a name or @ to find users
+                                    </p>
                                 </div>
                             )}
 

@@ -3,7 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Contact, ContactDocument } from '../../schemas/contacts.schema';
 import { User, UserDocument } from '../../schemas/user.schema';
+import { Notification, NotificationDocument } from "../../schemas/notifications.schema";
 import { ContactsAllMyContactsResponse } from '@collabo-hub/shared';
+import { MailerService } from '@nestjs-modules/mailer';
 
 type ContactArray = ContactsAllMyContactsResponse['contacts'];
 
@@ -14,6 +16,9 @@ export class ContactsService {
     private contactModel: Model<ContactDocument>,
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
+    @InjectModel(Notification.name)
+    private notificationModel: Model<NotificationDocument>,
+    private mailerService: MailerService,
   ) { }
 
   async findAllMyContacts(id: string): Promise<ContactArray> {
@@ -62,5 +67,45 @@ export class ContactsService {
       email: u.email,
       joined: u.joined
     }));
+  }
+
+  async createContact(
+    myId: string,
+    idContact: string,
+    emailContact: string
+  ): Promise<{ success: boolean, message: string }> {
+    const existingContact = await this.contactModel.findOne({
+      $or: [
+        { user: myId, contact: idContact },
+        { user: idContact, contact: myId },
+      ],
+    });
+
+    if (existingContact)
+      return { success: false, message: 'Contact already exists' };
+
+
+    const contact = new this.contactModel({
+      user: myId,
+      contact: idContact,
+    });
+
+    await contact.save();
+
+    const notification = new this.notificationModel({
+      title: "New connection request",
+      message: "You got a new connection request on Collabo Hub",
+      user: idContact,
+    });
+
+    await notification.save();
+
+    await this.mailerService.sendMail({
+      to: emailContact,
+      subject: 'You got a new connect on Collabo Hub',
+      html: 'some'
+    });
+
+    return { success: true, message: 'Contact created successfully' };
   }
 }

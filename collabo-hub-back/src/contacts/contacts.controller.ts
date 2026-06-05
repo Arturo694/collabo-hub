@@ -3,12 +3,17 @@ import {
   Get,
   Req,
   UseGuards,
-  Param
+  Param,
+  Post,
+  Body
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import type { RequestAuth } from '../interfaces/requetsAuth';
 import { AuthGuard } from '../guards/auth.guard';
-import { ContactsAllMyContactsResponse } from '@collabo-hub/shared'
+import type {
+  ContactsAllMyContactsResponse,
+  ContactsCreateContactRequest
+} from '@collabo-hub/shared'
 
 
 @Controller('contacts')
@@ -36,6 +41,17 @@ export class ContactsController {
   ): Promise<ContactsAllMyContactsResponse> {
     const contacts = await this.contactsService.seekContacts(contact);
     return { success: true, contacts, };
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('createContact')
+  async createContact(
+    @Body() createContactRequest: ContactsCreateContactRequest,
+    @Req() request: RequestAuth
+  ) {
+    const { idContact, email } = createContactRequest;
+    const { id } = request.tokenData;
+
   }
 
 }
