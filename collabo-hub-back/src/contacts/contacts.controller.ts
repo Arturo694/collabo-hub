@@ -5,7 +5,8 @@ import {
   UseGuards,
   Param,
   Post,
-  Body
+  Body,
+  Delete
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import type { RequestAuth } from '../interfaces/requetsAuth';
@@ -54,6 +55,15 @@ export class ContactsController {
     const { id } = request.tokenData;
 
     return this.contactsService.createContact(id, idContact, email)
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete("deleteContact/:idContact")
+  async deleteContact(
+    @Param('idContact') idContact: string,
+    @Req() request: RequestAuth
+  ) {
+    const { id } = request.tokenData;
   }
 
 }

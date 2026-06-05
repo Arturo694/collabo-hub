@@ -109,4 +109,17 @@ export class ContactsService {
 
     return { success: true, message: 'Contact created successfully' };
   }
+
+  async deleteContact(myId: string, idContact: string) {
+    const result = await this.contactModel.findOneAndDelete({
+      $or: [
+        { user: myId, contact: idContact },
+        { user: idContact, contact: myId },
+      ],
+    });
+
+    if (!result) return { success: false, message: 'Contact not found' };
+
+    return { success: true, message: 'Contact deleted successfully' };
+  }
 }
