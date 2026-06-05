@@ -4,7 +4,8 @@ import { Model } from 'mongoose';
 import { Contact, ContactDocument } from '../../schemas/contacts.schema';
 import { User, UserDocument } from '../../schemas/user.schema';
 import { Notification, NotificationDocument } from "../../schemas/notifications.schema";
-import { ContactsAllMyContactsResponse } from '@collabo-hub/shared';
+import { ContactsAllMyContactsResponse, ContactsCreateContactResponse } from '@collabo-hub/shared';
+import { wrapperNewConnectionEmail } from '@collabo-hub/emails';
 import { MailerService } from '@nestjs-modules/mailer';
 
 type ContactArray = ContactsAllMyContactsResponse['contacts'];
@@ -73,7 +74,7 @@ export class ContactsService {
     myId: string,
     idContact: string,
     emailContact: string
-  ): Promise<{ success: boolean, message: string }> {
+  ): Promise<ContactsCreateContactResponse> {
     const existingContact = await this.contactModel.findOne({
       $or: [
         { user: myId, contact: idContact },
@@ -103,7 +104,7 @@ export class ContactsService {
     await this.mailerService.sendMail({
       to: emailContact,
       subject: 'You got a new connect on Collabo Hub',
-      html: 'some'
+      html: await wrapperNewConnectionEmail()
     });
 
     return { success: true, message: 'Contact created successfully' };

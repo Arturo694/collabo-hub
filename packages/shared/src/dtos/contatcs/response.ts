@@ -1,5 +1,5 @@
 export interface ContactsAllMyContactsResponse {
-    success: true,
+    success: true;
     contacts: Array<{
         id: string
         name: string,
@@ -7,4 +7,9 @@ export interface ContactsAllMyContactsResponse {
         email: string,
         joined: Date
     }>
+}
+
+export interface ContactsCreateContactResponse {
+    success: boolean;
+    message: string;
 }

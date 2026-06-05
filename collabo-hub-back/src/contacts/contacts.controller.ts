@@ -12,7 +12,8 @@ import type { RequestAuth } from '../interfaces/requetsAuth';
 import { AuthGuard } from '../guards/auth.guard';
 import type {
   ContactsAllMyContactsResponse,
-  ContactsCreateContactRequest
+  ContactsCreateContactRequest,
+  ContactsCreateContactResponse
 } from '@collabo-hub/shared'
 
 
@@ -48,10 +49,11 @@ export class ContactsController {
   async createContact(
     @Body() createContactRequest: ContactsCreateContactRequest,
     @Req() request: RequestAuth
-  ) {
+  ): Promise<ContactsCreateContactResponse> {
     const { idContact, email } = createContactRequest;
     const { id } = request.tokenData;
 
+    return this.contactsService.createContact(id, idContact, email)
   }
 
 }
