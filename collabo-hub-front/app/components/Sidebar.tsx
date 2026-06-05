@@ -5,7 +5,7 @@ import {
     LuBookOpen,
     LuSettings,
     LuLogOut,
-    LuStickyNote,
+    LuBell,
     LuMilestone
 } from "react-icons/lu";
 import { useNavigate, Link, useLocation } from "react-router";
@@ -23,7 +23,7 @@ export default function Sidebar(
         { label: 'Home', icon: LuLayoutDashboard, path: ROUTES.AUTH_DASHBOARD },
         { label: 'My teams', icon: LuHouse, path: ROUTES.AUTH_TEAMS },
         { label: 'Tasks', icon: LuClipboardList, path: ROUTES.AUTH_TASKS },
-        { label: 'Notes', icon: LuStickyNote, path: ROUTES.AUTH_NOTES },
+        { label: 'Notifications', icon: LuBell, path: ROUTES.AUTH_NOTIFICATIONS },
         { label: 'Phases', icon: LuMilestone, path: ROUTES.AUTH_PHASES },
         { label: 'Contacts', icon: LuBookOpen, path: ROUTES.AUTH_CONTACTS },
     ];

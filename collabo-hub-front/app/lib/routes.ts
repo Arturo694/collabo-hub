@@ -18,7 +18,7 @@ export const ROUTES = {
     AUTH_CONTACTS: "/auth/contacts",
     AUTH_TEAMS: "/auth/teams",
     AUTH_TASKS: "/auth/tasks",
-    AUTH_NOTES: "/auth/notes",
+    AUTH_NOTIFICATIONS: "/auth/notifications",
     AUTH_PHASES: "/auth/phases",
     AUTH_PREFERENCES: "/auth/preferences",
 
