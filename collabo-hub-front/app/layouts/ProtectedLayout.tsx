@@ -20,9 +20,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function ProtectedLayout() {
     const { name, atSign } = useLoaderData<typeof loader>();
     return (
-        <main className="flex">
+        <main className="flex h-screen overflow-hidden">
             <Sidebar name={name} atSign={atSign} />
-            <div className="w-full">
+            <div className="flex-1 overflow-y-auto">
                 <Outlet />
             </div>
         </main>
