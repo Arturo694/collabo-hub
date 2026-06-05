@@ -1,5 +1,14 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Req,
+  UseGuards
+} from '@nestjs/common';
 import { ContactsService } from './contacts.service';
+import type { RequestAuth } from '../interfaces/requetsAuth';
+import { AuthGuard } from '../guards/auth.guard';
+import { ContactsFindAllMyContactsResponse } from '@collabo-hub/shared'
+
 
 @Controller('contacts')
 export class ContactsController {
@@ -8,15 +17,15 @@ export class ContactsController {
   ) { }
 
 
-  @Get()
-  findAll() {
-    return this.contactsService.findAll();
-  }
+  @UseGuards(AuthGuard)
+  @Get('allMyContacts')
+  async allMyContacts(
+    @Req() request: RequestAuth
+  ): Promise<ContactsFindAllMyContactsResponse> {
+    const { id } = request.tokenData;
+    const contacts = await this.contactsService.findAllMyContacts(id);
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contactsService.findOne(+id);
+    return { success: true, contacts, };
   }
-
 
 }
