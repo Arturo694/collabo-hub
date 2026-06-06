@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Contact, ContactDocument } from '../../schemas/contacts.schema';
 import { User, UserDocument } from '../../schemas/user.schema';
 import { Notification, NotificationDocument } from "../../schemas/notifications.schema";
-import { ContactsAllMyContactsResponse, ContactsCreateContactResponse } from '@collabo-hub/shared';
+import { ContactsAllMyContactsResponse, GenericResponse } from '@collabo-hub/shared';
 import { wrapperNewConnectionEmail } from '@collabo-hub/emails';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -74,7 +74,7 @@ export class ContactsService {
     myId: string,
     idContact: string,
     emailContact: string
-  ): Promise<ContactsCreateContactResponse> {
+  ): Promise<GenericResponse> {
     const existingContact = await this.contactModel.findOne({
       $or: [
         { user: myId, contact: idContact },
@@ -110,7 +110,10 @@ export class ContactsService {
     return { success: true, message: 'Contact created successfully' };
   }
 
-  async deleteContact(myId: string, idContact: string) {
+  async deleteContact(
+    myId: string,
+    idContact: string
+  ): Promise<GenericResponse> {
     const result = await this.contactModel.findOneAndDelete({
       $or: [
         { user: myId, contact: idContact },

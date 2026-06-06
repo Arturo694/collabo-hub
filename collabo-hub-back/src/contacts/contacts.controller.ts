@@ -14,7 +14,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import type {
   ContactsAllMyContactsResponse,
   ContactsCreateContactRequest,
-  ContactsCreateContactResponse
+  GenericResponse
 } from '@collabo-hub/shared'
 
 
@@ -50,7 +50,7 @@ export class ContactsController {
   async createContact(
     @Body() createContactRequest: ContactsCreateContactRequest,
     @Req() request: RequestAuth
-  ): Promise<ContactsCreateContactResponse> {
+  ): Promise<GenericResponse> {
     const { idContact, email } = createContactRequest;
     const { id } = request.tokenData;
 
@@ -62,8 +62,9 @@ export class ContactsController {
   async deleteContact(
     @Param('idContact') idContact: string,
     @Req() request: RequestAuth
-  ) {
+  ): Promise<GenericResponse> {
     const { id } = request.tokenData;
+    return await this.contactsService.deleteContact(id, idContact)
   }
 
 }

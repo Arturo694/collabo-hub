@@ -18,7 +18,7 @@ import {
 
 import { observer } from "mobx-react-lite";
 import type { Contact, ContactStore } from "./contactStore";
-import { createContact } from '../../lib/api';
+import { createContact, deleteContact } from '../../lib/api';
 
 export const ContactsView = observer(({ store }: { store: ContactStore }) => {
     return (
@@ -103,7 +103,12 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                     <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-custom-blue/10 hover:text-custom-blue transition-all">
                                         <LuMail size={13} />
                                     </button>
-                                    <button className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-red-50 hover:text-red-600 transition-all">
+                                    <button
+                                        onClick={async () => {
+                                            await deleteContact(c.id);
+                                            await store.refreshContacts();
+                                        }}
+                                        className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-red-50 hover:text-red-600 transition-all">
                                         <LuTrash2 size={13} />
                                     </button>
                                 </div>

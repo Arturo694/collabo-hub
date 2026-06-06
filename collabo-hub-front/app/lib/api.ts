@@ -8,7 +8,7 @@ import type {
     IamSignOutResponse,
     ContactsAllMyContactsResponse,
     ContactsCreateContactRequest,
-    ContactsCreateContactResponse
+    GenericResponse
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -78,12 +78,22 @@ export async function contactsSeek(
 
 export async function createContact(
     data: ContactsCreateContactRequest
-): Promise<ContactsCreateContactResponse> {
-    const res = await api.post<ContactsCreateContactResponse>(
+): Promise<GenericResponse> {
+    const res = await api.post<GenericResponse>(
         "/contacts/createContact",
         data,
         { withCredentials: true }
     )
+
+    return res.data
+}
+
+export async function deleteContact(
+    idContact: string
+): Promise<GenericResponse> {
+    const res = await api.delete<GenericResponse>(`/contacts/deleteContact/${idContact}`, {
+        withCredentials: true
+    })
 
     return res.data
 }

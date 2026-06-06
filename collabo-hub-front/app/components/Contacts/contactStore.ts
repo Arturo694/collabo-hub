@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { type ContactsAllMyContactsResponse } from '@collabo-hub/shared'
-import { contactsSeek } from "../../lib/api";
+import { contactsSeek, contactsFindAll } from "../../lib/api";
 
 type Contacts = ContactsAllMyContactsResponse["contacts"]
 export type Contact = Contacts[number]
@@ -37,6 +37,15 @@ export class ContactStore {
     }
 
     init(contacts: Contacts) { this.contacts = contacts }
+
+    async refreshContacts() {
+        try {
+            const { contacts } = await contactsFindAll("");
+            this.contacts = contacts;
+        } catch {
+            // silently fail
+        }
+    }
 
     setDialog(value: boolean) {
         this.showDialog = value;

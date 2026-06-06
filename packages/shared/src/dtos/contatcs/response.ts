@@ -9,7 +9,7 @@ export interface ContactsAllMyContactsResponse {
     }>
 }
 
-export interface ContactsCreateContactResponse {
+export interface GenericResponse {
     success: boolean;
     message: string;
 }
