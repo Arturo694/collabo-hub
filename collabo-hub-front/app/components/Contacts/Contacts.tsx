@@ -18,9 +18,51 @@ import {
 
 import { observer } from "mobx-react-lite";
 import type { Contact, ContactStore } from "./contactStore";
-import { createContact, deleteContact } from '../../lib/api';
+import { contactsSeek, contactsFindAll, createContact, deleteContact } from '../../lib/api';
 
 export const ContactsView = observer(({ store }: { store: ContactStore }) => {
+    const handleSeek = async (value: string) => {
+        store.setSearchContacts(value);
+        if (!value.trim()) {
+            store.setSeekResults([]);
+            store.setSeekLoading(false);
+            return;
+        }
+        store.setSeekLoading(true);
+        store.setSeekResults([]);
+        try {
+            const { contacts } = await contactsSeek(value);
+            store.setSeekResults(contacts);
+        } catch {
+            store.setSeekResults([]);
+        } finally {
+            store.setSeekLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        store.setError("");
+        try {
+            await deleteContact(id);
+            const { contacts } = await contactsFindAll("");
+            store.setContacts(contacts);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Failed to delete contact";
+            store.setError(message);
+        }
+    };
+
+    const handleConnect = async (id: string, email: string) => {
+        store.setError("");
+        try {
+            await createContact({ idContact: id, email });
+            store.setSeekResults(store.seekResults.filter((c) => c.id !== id));
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Failed to add contact";
+            store.setError(message);
+        }
+    };
+
     return (
         <>
             <div className="w-full min-h-screen p-10 bg-white font-outfit">
@@ -42,6 +84,12 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                             Add contact
                         </button>
                     </div>
+
+                    {store.error && (
+                        <div className="mb-4 px-4 py-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 font-outfit text-[13px]">
+                            {store.error}
+                        </div>
+                    )}
 
                     <div className="relative mb-5">
                         <LuSearch
@@ -104,10 +152,7 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                         <LuMail size={13} />
                                     </button>
                                     <button
-                                        onClick={async () => {
-                                            await deleteContact(c.id);
-                                            await store.refreshContacts();
-                                        }}
+                                        onClick={() => handleDelete(c.id)}
                                         className="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:bg-red-50 hover:text-red-600 transition-all">
                                         <LuTrash2 size={13} />
                                     </button>
@@ -176,7 +221,7 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                 <LuSearch size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
                                 <input
                                     value={store.searchContacts}
-                                    onChange={(e) => store.setSearchContacts(e.target.value)}
+                                    onChange={(e) => handleSeek(e.target.value)}
                                     placeholder="Search by name or @..."
                                     className="w-full border border-neutral-200 rounded-lg pl-10 pr-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
                                 />
@@ -206,9 +251,7 @@ export const ContactsView = observer(({ store }: { store: ContactStore }) => {
                                                 </p>
                                             </div>
                                             <button
-                                                onClick={async () => {
-                                                    await createContact({ idContact: c.id, email: c.email });
-                                                }}
+                                                onClick={() => handleConnect(c.id, c.email)}
                                                 className="bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[11px] px-3 py-1.5 rounded-lg transition-all">
                                                 Conectar
                                             </button>
