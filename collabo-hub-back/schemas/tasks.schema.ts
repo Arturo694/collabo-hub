@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User } from './user.schema';
-import { Priority } from './priorities.schema';
 import { Status } from './statuses.schema';
 import { Phase } from './phases.schema';
 
@@ -31,12 +30,6 @@ export class Task {
     })
     whoAssignedTo: User[];
 
-    @Prop({
-        type: Types.ObjectId,
-        ref: 'Priority',
-        required: true
-    })
-    priority: Priority;
 
     @Prop({
         type: Types.ObjectId,

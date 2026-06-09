@@ -1,5 +1,5 @@
 import { type MetaFunction } from "react-router";
-import { TeamStore } from "../../components/MyTeams/teamStore";
+import { TeamStore } from "../../components/MyTeams/CreateTeam/teamStore";
 import { MyTeamsView } from "../../components/MyTeams/MyTeams";
 
 export const meta: MetaFunction = () => {
