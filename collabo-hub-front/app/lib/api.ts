@@ -8,7 +8,8 @@ import type {
     IamSignOutResponse,
     ContactsAllMyContactsResponse,
     ContactsCreateContactRequest,
-    GenericResponse
+    GenericResponse,
+    AllMyNotificationsResponse
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -94,6 +95,20 @@ export async function deleteContact(
     const res = await api.delete<GenericResponse>(`/contacts/deleteContact/${idContact}`, {
         withCredentials: true
     })
+
+    return res.data
+}
+
+export async function notificationsAllMyNotifications(
+    cookieHeader: string
+): Promise<AllMyNotificationsResponse> {
+    const res = await api.get<AllMyNotificationsResponse>(
+        "/notifications/allMyNotifications",
+        {
+            headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
+            withCredentials: true
+        }
+    )
 
     return res.data
 }

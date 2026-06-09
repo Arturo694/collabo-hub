@@ -1,3 +1,19 @@
+import { type LoaderFunctionArgs, redirect, useLoaderData } from "react-router";
+import { notificationsAllMyNotifications } from "../../lib/api";
+import { ROUTES } from "~/lib/routes";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+    const cookie = request.headers.get("Cookie");
+    if (cookie == null) throw new Error();
+
+    try {
+        await notificationsAllMyNotifications(cookie);
+        // return notifications;
+    } catch (error) {
+        return redirect(ROUTES.SIGNIN);
+    }
+}
+
 export default function Notifications() {
     return (
         <div className="w-full min-h-screen p-10 bg-white font-outfit">

@@ -12,7 +12,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     try {
         const { contacts } = await contactsFindAll(cookie);
-        store.init(contacts)
         return contacts;
     } catch (error) {
         return redirect(ROUTES.SIGNIN);
