@@ -5,6 +5,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { JwtModule } from '@nestjs/jwt';
 import { IamModule } from './iam/iam.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { ContactsModule } from './contacts/contacts.module';
     // Our business logic
     IamModule,
     ContactsModule,
+    NotificationsModule,
   ]
 })
 

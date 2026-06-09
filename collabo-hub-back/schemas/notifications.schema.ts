@@ -28,7 +28,7 @@ export class Notification {
         ref: 'User',
         required: true
     })
-    user: User;
+    user: User | string;
 
 }
 
