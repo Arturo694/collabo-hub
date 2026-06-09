@@ -10,7 +10,7 @@ import {
     LuGitBranch
 } from "react-icons/lu";
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "~/lib/routes";
 import type { Route } from "./+types/resources";
 
 export function meta({ }: Route.MetaArgs) {

@@ -1,10 +1,10 @@
+import { ROUTES } from "./lib/routes";
 import {
     type RouteConfig,
     index,
     layout,
     route
 } from "@react-router/dev/routes";
-import { ROUTES } from "./lib/routes";
 
 export default [
     layout("./layouts/PublicLayout.tsx", [

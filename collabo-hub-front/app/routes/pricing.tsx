@@ -1,9 +1,9 @@
 import { LuCheck, LuZap, LuBuilding2, LuRocket } from "react-icons/lu";
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "~/lib/routes";
 import type { Route } from "./+types/pricing";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Pricing — Collabo-Hub" },
         { name: "description", content: "Simple, transparent pricing for teams of all sizes." },

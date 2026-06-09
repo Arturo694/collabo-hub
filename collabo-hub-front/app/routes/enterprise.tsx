@@ -8,7 +8,7 @@ import {
     LuCheck
 } from "react-icons/lu";
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "~/lib/routes";
 import type { Route } from "./+types/enterprise";
 
 export function meta({ }: Route.MetaArgs) {

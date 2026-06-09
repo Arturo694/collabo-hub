@@ -1,8 +1,15 @@
-import { type LoaderFunctionArgs, redirect, useLoaderData } from "react-router";
-import { ContactStore } from "../../components/Contacts/contactStore";
-import { ContactsView } from "../../components/Contacts/Contacts";
-import { contactsFindAll } from "../../lib/api";
-import { ROUTES } from "../../lib/routes";
+import { type LoaderFunctionArgs, redirect, useLoaderData, type MetaFunction } from "react-router";
+import { ContactStore } from "~/components/Contacts/contactStore";
+import { ContactsView } from "~/components/Contacts/Contacts";
+import { contactsFindAll } from "~/lib/api";
+import { ROUTES } from "~/lib/routes";
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: "Contacts | Collabo-Hub" },
+        { name: "description", content: "Manage your contacts and stay connected with your team." },
+    ];
+};
 
 const store = new ContactStore()
 

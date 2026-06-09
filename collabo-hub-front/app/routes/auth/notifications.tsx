@@ -1,7 +1,14 @@
-import { type LoaderFunctionArgs, redirect, useLoaderData } from "react-router";
-import { notificationsAllMyNotifications } from "../../lib/api";
+import { type LoaderFunctionArgs, redirect, useLoaderData, type MetaFunction } from "react-router";
+import { notificationsAllMyNotifications } from "~/lib/api";
 import { ROUTES } from "~/lib/routes";
-import { NotificationsView } from "../../components/Notifications/Notifications";
+import { NotificationsView } from "~/components/Notifications/Notifications";
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: "Notifications | Collabo-Hub" },
+        { name: "description", content: "Stay updated with the latest activity and updates from your team." },
+    ];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const cookie = request.headers.get("Cookie");

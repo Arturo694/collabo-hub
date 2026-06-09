@@ -1,9 +1,9 @@
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "~/lib/routes";
 import { LuArrowLeft } from "react-icons/lu";
 import type { Route } from "./+types/404";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
     return [
         { title: "404 — Page not found" },
     ];

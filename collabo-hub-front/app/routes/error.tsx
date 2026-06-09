@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
+import { ROUTES } from "~/lib/routes";
 import { LuArrowLeft } from "react-icons/lu";
 
 export function meta() {

@@ -1,7 +1,7 @@
 import type { Route } from "./+types/signin";
 import { Link } from "react-router";
-import { ROUTES } from "../lib/routes";
-import FormSignIn from "../components/forms/form-sign-in/FormSignIn";
+import { ROUTES } from "~/lib/routes";
+import FormSignIn from "~/components/forms/form-sign-in/FormSignIn";
 
 export function meta({ }: Route.MetaArgs) {
     return [
