@@ -3,6 +3,8 @@ import type { ContactsAllMyContactsResponse } from "@collabo-hub/shared";
 
 type Contact = ContactsAllMyContactsResponse["contacts"][number];
 
+type StatusEntry = { name: string; description: string; color: string; type: "status" | "priority" }
+
 export class TeamStore {
     showArmTeam: boolean = false
     showSearchContacts: boolean = false
@@ -15,6 +17,11 @@ export class TeamStore {
     availableContacts: Contact[] = []
     selectedMembers: string[] = []
     contactSearch: string = ""
+    statuses: StatusEntry[] = []
+    currentStatusName: string = ""
+    currentStatusDescription: string = ""
+    currentStatusColor: string = ""
+    currentStatusType: "status" | "priority" = "status"
 
     constructor() { makeAutoObservable(this) }
 
@@ -83,6 +90,33 @@ export class TeamStore {
 
     removeTag(index: number) {
         this.tags.splice(index, 1)
+    }
+
+    setCurrentStatusName(value: string) { this.currentStatusName = value }
+
+    setCurrentStatusDescription(value: string) { this.currentStatusDescription = value }
+
+    setCurrentStatusColor(value: string) { this.currentStatusColor = value }
+
+    setCurrentStatusType(value: "status" | "priority") { this.currentStatusType = value }
+
+    addStatus() {
+        const name = this.currentStatusName.trim()
+        if (!name) return
+        this.statuses.push({
+            name,
+            description: this.currentStatusDescription.trim(),
+            color: this.currentStatusColor.trim(),
+            type: this.currentStatusType,
+        })
+        this.currentStatusName = ""
+        this.currentStatusDescription = ""
+        this.currentStatusColor = ""
+        this.currentStatusType = "status"
+    }
+
+    removeStatus(index: number) {
+        this.statuses.splice(index, 1)
     }
 
     get filteredContacts() {

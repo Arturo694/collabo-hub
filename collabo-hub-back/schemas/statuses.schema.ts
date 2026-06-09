@@ -2,6 +2,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Team } from './team.schema';
 
+export enum TypeStatus {
+    STATUS = 'status',
+    PRIORITY = 'priority',
+}
+
 @Schema()
 export class Status {
     @Prop({ required: true })
@@ -12,6 +17,13 @@ export class Status {
 
     @Prop({ required: true })
     color: string;
+
+    @Prop({
+        type: String,
+        enum: TypeStatus,
+        required: true
+    })
+    type: TypeStatus;
 
     @Prop({
         type: Types.ObjectId,

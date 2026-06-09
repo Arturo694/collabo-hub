@@ -8,7 +8,7 @@ import {
 } from '@headlessui/react'
 import { observer } from "mobx-react-lite";
 import type { TeamStore } from "./teamStore";
-import { ArmTeamSchema, SearchContactsSchema } from "./myTeamsValidation";
+import { ArmTeamSchema } from "./myTeamsValidation";
 import { contactsFindAll } from "../../lib/api";
 
 export const MyTeamsView = observer(({ store }: { store: TeamStore }) => {
@@ -321,7 +321,7 @@ export const MyTeamsView = observer(({ store }: { store: TeamStore }) => {
                                         <LuArrowLeft size={16} />
                                     </button>
                                     <DialogTitle className="font-gabarito text-lg font-bold text-neutral-800">
-                                        Statuses
+                                        Status & Priorities
                                     </DialogTitle>
                                 </div>
                                 <button
@@ -332,13 +332,119 @@ export const MyTeamsView = observer(({ store }: { store: TeamStore }) => {
                                 </button>
                             </div>
 
-                            <p className="font-outfit text-[13px] text-neutral-400 text-center py-8">
-                                Configure your team statuses.
-                            </p>
+                            <div className="flex flex-col gap-4">
+                                <div>
+                                    <label className="font-outfit text-[13px] font-medium text-neutral-700 mb-1.5 block">
+                                        Name
+                                    </label>
+                                    <input
+                                        value={store.currentStatusName}
+                                        onChange={(e) => store.setCurrentStatusName(e.target.value)}
+                                        placeholder="Status name"
+                                        className="w-full border border-neutral-200 rounded-lg px-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="font-outfit text-[13px] font-medium text-neutral-700 mb-1.5 block">
+                                        Description
+                                    </label>
+                                    <input
+                                        value={store.currentStatusDescription}
+                                        onChange={(e) => store.setCurrentStatusDescription(e.target.value)}
+                                        placeholder="Description"
+                                        className="w-full border border-neutral-200 rounded-lg px-3 py-2.5 text-sm font-outfit text-neutral-700 focus:outline-none focus:border-custom-blue transition-colors placeholder:text-neutral-400"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="font-outfit text-[13px] font-medium text-neutral-700 mb-1.5 block">
+                                        Color (hex)
+                                    </label>
+                                    <div className="flex gap-2 items-center">
+                                        <div className="flex-1 flex items-center border border-neutral-200 rounded-lg px-3 py-2.5 gap-1 focus-within:border-custom-blue transition-colors">
+                                            <span className="font-outfit text-sm text-neutral-500">#</span>
+                                            <input
+                                                value={store.currentStatusColor}
+                                                onChange={(e) => store.setCurrentStatusColor(e.target.value)}
+                                                placeholder="fff"
+                                                className="flex-1 text-sm font-outfit text-neutral-700 outline-none placeholder:text-neutral-400"
+                                            />
+                                            <div
+                                                className="w-6 h-6 rounded border border-neutral-200 shrink-0"
+                                                style={{ backgroundColor: `#${store.currentStatusColor || "fff"}` }}
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() => store.addStatus()}
+                                            className="bg-custom-blue hover:opacity-90 text-white rounded-lg transition-all shrink-0 w-9 h-9 flex items-center justify-center"
+                                        >
+                                            <LuPlus size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="font-outfit text-[13px] font-medium text-neutral-700 mb-1.5 block">
+                                        Type
+                                    </label>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => store.setCurrentStatusType("status")}
+                                            className={`flex-1 px-3 py-2 rounded-lg text-sm font-outfit font-medium transition-all border ${store.currentStatusType === "status" ? "bg-custom-blue text-white border-custom-blue" : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300"}`}
+                                        >
+                                            Status
+                                        </button>
+                                        <button
+                                            onClick={() => store.setCurrentStatusType("priority")}
+                                            className={`flex-1 px-3 py-2 rounded-lg text-sm font-outfit font-medium transition-all border ${store.currentStatusType === "priority" ? "bg-custom-blue text-white border-custom-blue" : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300"}`}
+                                        >
+                                            Priority
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {store.statuses.length > 0 && (
+                                <div className="flex flex-col gap-1 mt-4 max-h-40 overflow-y-auto">
+                                    {store.statuses.map((s, i) => (
+                                        <div
+                                            key={i}
+                                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-all"
+                                        >
+                                            <div
+                                                className="w-3 h-3 rounded-full shrink-0"
+                                                style={{ backgroundColor: `#${s.color || "ccc"}` }}
+                                            />
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2">
+                                                    <p className="font-outfit text-[13px] font-semibold text-neutral-800">
+                                                        {s.name}
+                                                    </p>
+                                                    <span className={`font-outfit text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded ${s.type === "status" ? "bg-blue-100 text-blue-700" : "bg-amber-100 text-amber-700"}`}>
+                                                        {s.type}
+                                                    </span>
+                                                </div>
+                                                {s.description && (
+                                                    <p className="font-outfit text-[11px] text-neutral-500 truncate">
+                                                        {s.description}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <button
+                                                onClick={() => store.removeStatus(i)}
+                                                className="text-neutral-400 hover:text-red-600 transition-all shrink-0"
+                                            >
+                                                <LuX size={14} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
                             <button
                                 onClick={() => store.setCreateTeam(false)}
-                                className="w-full bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[13px] px-4 py-2.5 rounded-lg transition-all"
+                                className="w-full bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[13px] px-4 py-2.5 rounded-lg transition-all mt-4"
                             >
                                 Cancel
                             </button>

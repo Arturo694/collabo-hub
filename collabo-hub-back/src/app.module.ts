@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { IamModule } from './iam/iam.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     IamModule,
     ContactsModule,
     NotificationsModule,
+    TeamsModule,
   ]
 })
 
