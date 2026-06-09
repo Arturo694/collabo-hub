@@ -4,10 +4,11 @@ import {
   Req,
   UseGuards
 } from '@nestjs/common';
-import type { RequestAuth } from '../interfaces/requetsAuth';
 import { NotificationsService } from './notifications.service';
 import { AuthGuard } from '../guards/auth.guard';
 import type { AllMyNotificationsResponse } from '@collabo-hub/shared';
+import type { RequestAuth } from '../interfaces/requetsAuth';
+
 
 @Controller('notifications')
 export class NotificationsController {

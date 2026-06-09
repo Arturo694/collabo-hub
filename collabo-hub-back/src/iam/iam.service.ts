@@ -4,9 +4,12 @@ import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../schemas/user.schema';
-import type { IamSignUpRequest, IamSignInRequest } from '@collabo-hub/shared';
 import { wrapperWelcomeEmail } from '@collabo-hub/emails';
 import bcrypt from 'bcrypt';
+import type {
+    IamSignUpRequest,
+    IamSignInRequest
+} from '@collabo-hub/shared';
 
 @Injectable()
 export class IamService {

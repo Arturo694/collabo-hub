@@ -7,10 +7,11 @@ import {
   Res,
   UseGuards
 } from '@nestjs/common';
-import type { Response } from 'express'
+
 import { IamService } from './iam.service';
 import { AuthGuard } from '../guards/auth.guard';
 import type { RequestAuth } from '../interfaces/requetsAuth';
+import type { Response } from 'express'
 import type {
   IamSignUpRequest,
   IamSignUpResponse,

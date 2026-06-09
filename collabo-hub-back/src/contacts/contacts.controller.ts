@@ -9,8 +9,8 @@ import {
   Delete
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
-import type { RequestAuth } from '../interfaces/requetsAuth';
 import { AuthGuard } from '../guards/auth.guard';
+import type { RequestAuth } from '../interfaces/requetsAuth';
 import type {
   ContactsAllMyContactsResponse,
   ContactsCreateContactRequest,
