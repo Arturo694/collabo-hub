@@ -2,13 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User } from './user.schema';
 
-export enum TeamVisibility {
-    Private = 'private',
-    Public = 'public',
-    Archived = 'archived'
-}
-
-
 @Schema()
 export class Team {
     @Prop({ required: true })
@@ -46,12 +39,6 @@ export class Team {
         ]
     })
     tags: string[];
-
-    @Prop({
-        default: TeamVisibility.Private,
-        enum: TeamVisibility
-    })
-    visibility: TeamVisibility;
 
 }
 
