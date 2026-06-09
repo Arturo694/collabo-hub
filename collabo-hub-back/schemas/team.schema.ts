@@ -25,7 +25,7 @@ export class Team {
         ref: 'User',
         required: true
     })
-    createdBy: User;
+    createdBy: User | string;
 
     @Prop({
         type: [{
@@ -34,7 +34,7 @@ export class Team {
         }],
         required: true
     })
-    members: User[];
+    members: User[] | string[];
 
     @Prop({
         type: [String],

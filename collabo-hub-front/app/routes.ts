@@ -23,5 +23,6 @@ export default [
         route(ROUTES.AUTH_DASHBOARD, "./routes/auth/dashboard.tsx"),
         route(ROUTES.AUTH_CONTACTS, "./routes/auth/contacts.tsx"),
         route(ROUTES.AUTH_NOTIFICATIONS, "./routes/auth/notifications.tsx"),
+        route(ROUTES.AUTH_TEAMS, "./routes/auth/myTeams.tsx"),
     ]),
 ] satisfies RouteConfig;

@@ -18,7 +18,7 @@ export class Status {
         ref: 'Team',
         required: true
     })
-    team: Team;
+    team: Team | string;
 }
 
 export type StatusDocument = HydratedDocument<Status>;
