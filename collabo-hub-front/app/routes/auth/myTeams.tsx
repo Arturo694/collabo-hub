@@ -1,6 +1,8 @@
-import { type MetaFunction } from "react-router";
+import { type LoaderFunctionArgs, useLoaderData, type MetaFunction } from "react-router";
 import { TeamStore } from "../../components/MyTeams/CreateTeam/teamStore";
+import { ListTeamStore } from "../../components/MyTeams/ListTeams/listTeamsStore";
 import { MyTeamsView } from "../../components/MyTeams/MyTeams";
+import { myTeams } from "../../lib/api";
 
 export const meta: MetaFunction = () => {
     return [
@@ -9,9 +11,21 @@ export const meta: MetaFunction = () => {
     ];
 };
 
-const store = new TeamStore();
+const createTeamStore = new TeamStore();
+const listTeamStore = new ListTeamStore();
+
+export async function loader({ request }: LoaderFunctionArgs) {
+    const cookie = request.headers.get("Cookie");
+    if (cookie == null) throw new Error();
+
+    const { teams } = await myTeams(cookie);
+    return teams;
+}
 
 export default function MyTeams() {
+    const data = useLoaderData<typeof loader>();
+    listTeamStore.init(data);
+
     return (
         <div className="w-full min-h-screen p-10 bg-white font-outfit">
             <div className="max-w-3xl mx-auto">
@@ -26,7 +40,7 @@ export default function MyTeams() {
                     </div>
                 </div>
 
-                <MyTeamsView store={store} />
+                <MyTeamsView createStore={createTeamStore} listStore={listTeamStore} />
             </div>
         </div>
     );

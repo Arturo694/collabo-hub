@@ -3,7 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Team, TeamDocument } from '../../schemas/team.schema';
 import { Status, StatusDocument, TypeStatus } from '../../schemas/statuses.schema';
-import type { TeamsCreateTeamRequest, TeamsCreateTeamResponse } from '@collabo-hub/shared';
+import { User } from '../../schemas/user.schema';
+import type {
+  TeamsCreateTeamRequest,
+  TeamsCreateTeamResponse,
+  TeamsMyTeamsResponse,
+} from '@collabo-hub/shared';
 
 @Injectable()
 export class TeamsService {
@@ -11,6 +16,29 @@ export class TeamsService {
     @InjectModel(Team.name) private teamModel: Model<TeamDocument>,
     @InjectModel(Status.name) private statusModel: Model<StatusDocument>,
   ) {}
+
+  async findMyTeams(userId: string): Promise<TeamsMyTeamsResponse> {
+    const teams = await this.teamModel
+      .find({
+        $or: [{ createdBy: userId }, { members: userId }],
+      })
+      .populate('createdBy', 'name')
+      .exec();
+
+    return {
+      success: true,
+      teams: teams.map((t) => {
+        const creator = t.createdBy as User;
+        return {
+          id: t._id.toString(),
+          name: t.name,
+          description: t.description,
+          createdBy: creator.name,
+          isOwner: (creator as any)._id.toString() === userId,
+        };
+      }),
+    };
+  }
 
   async createTeam(
     userId: string,

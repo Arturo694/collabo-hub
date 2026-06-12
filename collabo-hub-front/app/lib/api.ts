@@ -12,6 +12,7 @@ import type {
     AllMyNotificationsResponse,
     TeamsCreateTeamRequest,
     TeamsCreateTeamResponse,
+    TeamsMyTeamsResponse,
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -122,6 +123,20 @@ export async function createTeam(
         "/teams/createTeam",
         data,
         { withCredentials: true }
+    )
+
+    return res.data
+}
+
+export async function myTeams(
+    cookieHeader: string
+): Promise<TeamsMyTeamsResponse> {
+    const res = await api.get<TeamsMyTeamsResponse>(
+        "/teams/myTeams",
+        {
+            headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
+            withCredentials: true
+        }
     )
 
     return res.data

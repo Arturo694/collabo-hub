@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -8,13 +9,26 @@ import {
 import { AuthGuard } from '../guards/auth.guard';
 import { TeamsService } from './teams.service';
 import type { RequestAuth } from '../interfaces/requetsAuth';
-import type { TeamsCreateTeamRequest, TeamsCreateTeamResponse } from '@collabo-hub/shared';
+import type {
+  TeamsCreateTeamRequest,
+  TeamsCreateTeamResponse,
+  TeamsMyTeamsResponse,
+} from '@collabo-hub/shared';
 
 @Controller('teams')
 export class TeamsController {
   constructor(
     private readonly teamsService: TeamsService
   ) { }
+
+  @UseGuards(AuthGuard)
+  @Get('myTeams')
+  async myTeams(
+    @Req() request: RequestAuth
+  ): Promise<TeamsMyTeamsResponse> {
+    const { id } = request.tokenData;
+    return this.teamsService.findMyTeams(id);
+  }
 
   @UseGuards(AuthGuard)
   @Post('createTeam')
