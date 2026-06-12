@@ -307,7 +307,7 @@ export const CreateTeamDialog = observer(({ store }: { store: TeamStore }) => {
                                         <LuArrowLeft size={16} />
                                     </button>
                                     <DialogTitle className="font-gabarito text-lg font-bold text-neutral-800">
-                                        Crea tus estados y prioridades
+                                        Statuses & priorities
                                     </DialogTitle>
                                 </div>
                                 <button
