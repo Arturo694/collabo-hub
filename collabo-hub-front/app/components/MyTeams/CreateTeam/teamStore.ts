@@ -22,8 +22,31 @@ export class TeamStore {
     currentStatusDescription: string = ""
     currentStatusColor: string = ""
     currentStatusType: "status" | "priority" = "status"
+    loading: boolean = false
 
     constructor() { makeAutoObservable(this) }
+
+    setLoading(value: boolean) { this.loading = value }
+
+    resetAll() {
+        this.showArmTeam = false
+        this.showSearchContacts = false
+        this.showStatuses = false
+        this.teamName = ""
+        this.teamDescription = ""
+        this.tags = []
+        this.currentTag = ""
+        this.error = ""
+        this.availableContacts = []
+        this.selectedMembers = []
+        this.contactSearch = ""
+        this.statuses = []
+        this.currentStatusName = ""
+        this.currentStatusDescription = ""
+        this.currentStatusColor = ""
+        this.currentStatusType = "status"
+        this.loading = false
+    }
 
     setCreateTeam(value: boolean) {
         if (value) {

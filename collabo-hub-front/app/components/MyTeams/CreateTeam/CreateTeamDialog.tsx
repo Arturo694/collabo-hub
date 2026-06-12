@@ -9,7 +9,7 @@ import {
 import { observer } from "mobx-react-lite";
 import type { TeamStore } from "./teamStore";
 import { ArmTeamSchema } from "./myTeamsValidation";
-import { contactsFindAll } from "../../../lib/api";
+import { contactsFindAll, createTeam } from "../../../lib/api";
 
 export const CreateTeamDialog = observer(({ store }: { store: TeamStore }) => {
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -40,6 +40,26 @@ export const CreateTeamDialog = observer(({ store }: { store: TeamStore }) => {
             return;
         }
         store.continueToStatuses();
+    };
+
+    const handleCreateTeam = async () => {
+        store.setLoading(true);
+        store.setError("");
+        try {
+            await createTeam({
+                name: store.teamName,
+                description: store.teamDescription,
+                tags: store.tags,
+                members: store.selectedMembers,
+                statuses: store.statuses,
+            });
+            store.resetAll();
+        } catch (err) {
+            const message = err instanceof Error ? err.message : "Failed to create team";
+            store.setError(message);
+        } finally {
+            store.setLoading(false);
+        }
     };
 
     return (
@@ -429,10 +449,11 @@ export const CreateTeamDialog = observer(({ store }: { store: TeamStore }) => {
                             )}
 
                             <button
-                                onClick={() => store.setCreateTeam(false)}
-                                className="w-full bg-custom-blue hover:opacity-90 text-white font-outfit font-medium text-[13px] px-4 py-2.5 rounded-lg transition-all mt-4"
+                                onClick={handleCreateTeam}
+                                disabled={store.loading}
+                                className="w-full bg-custom-blue hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-outfit font-medium text-[13px] px-4 py-2.5 rounded-lg transition-all mt-4"
                             >
-                                Cancel
+                                {store.loading ? "Creating..." : "Create team"}
                             </button>
                         </TransitionChild>
                     </div>

@@ -9,7 +9,9 @@ import type {
     ContactsAllMyContactsResponse,
     ContactsCreateContactRequest,
     GenericResponse,
-    AllMyNotificationsResponse
+    AllMyNotificationsResponse,
+    TeamsCreateTeamRequest,
+    TeamsCreateTeamResponse,
 } from '@collabo-hub/shared';
 
 const api = axios.create({
@@ -108,6 +110,18 @@ export async function notificationsAllMyNotifications(
             headers: cookieHeader ? { Cookie: cookieHeader } : undefined,
             withCredentials: true
         }
+    )
+
+    return res.data
+}
+
+export async function createTeam(
+    data: TeamsCreateTeamRequest
+): Promise<TeamsCreateTeamResponse> {
+    const res = await api.post<TeamsCreateTeamResponse>(
+        "/teams/createTeam",
+        data,
+        { withCredentials: true }
     )
 
     return res.data
